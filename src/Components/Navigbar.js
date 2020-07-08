@@ -11,11 +11,9 @@ class Navigbar extends React.Component{
         return(
             <div>
             <Router>
-
                     <Switch>
                         <Route path="/Home" component={Home}/>
                     </Switch>
-
             </Router>
         <Navbar className="navigbar-custom">
             <Navbar.Brand href="#home">

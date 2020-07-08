@@ -1,20 +1,20 @@
-.Home {
+.Login {
     position:relative;
 }
 
-.Home-logo {
+.Login-logo {
     margin-top : 2px;
     height: 4vmin;
     pointer-events: none;
 }
-.button{
+.Login-button{
     position: absolute;
 }
-.text{
+.Login-text{
     margin-right: 20px;
     display: inline-block;
 }
-.Home-header {
+.Login-header {
     position:relative;
     width:100vh;
     flex-direction: column;
@@ -29,14 +29,14 @@
     font-family: Arial;
 }
 
-.Home-body{
+.Login-body{
     justify-content: center;
     color: black;
     text-align:left;
     margin-left: 50px;
     font-size: x-large;
 }
-.Home-link {
+.Login-link {
     color: #61dafb;
 }
 
