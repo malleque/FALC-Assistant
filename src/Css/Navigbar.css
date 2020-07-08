@@ -1,0 +1,10 @@
+.navigbar-custom{
+    background-color: #3949AB;
+}
+.navigbar-logo {
+    height: 3vmin;
+    pointer-events: none;
+}
+.navigbar-text{
+    color: white;
+}
