@@ -1,7 +1,10 @@
 .App {
   text-align: center;
 }
+form, h1{
+  align-items: flex-start;
 
+}
 .App-logo {
   margin-top : 2px;
   height: 4vmin;

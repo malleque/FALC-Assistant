@@ -7,7 +7,8 @@ import button from "react-bootstrap/Button";
 var e = new Error("Cette adresse mail possède déjà un compte. Merci de vous connecter.");
 const SignUpPage = () => (
     <div>
-        <h1>Inscription</h1>
+        <h1>Bienvenue sur le FALC Assistant!</h1>
+        <h2>Inscription</h2>
         <SignUpForm/>
     </div>
 );
@@ -36,6 +37,7 @@ class SignUpFormBase extends Component {
             .then(authUser => {
                 this.setState({ ...INITIAL_STATE });
                 this.props.history.push("/Home");
+                window.location.reload();
             })
             .catch(error => {
                 this.setState({ error });
@@ -68,7 +70,7 @@ class SignUpFormBase extends Component {
                     value={username}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Pseudo"
+                    placeholder="Nom"
                 />
                 <br/>
                 <input
@@ -95,10 +97,7 @@ class SignUpFormBase extends Component {
                     placeholder="Confirmation"
                 />
                 <br/>
-                <button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg">Sign Up</button>
-                &nbsp;
-                &nbsp;
-                &nbsp;
+                <button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg">S'inscrire</button>
                 <Link to={"/"}>
                     <button type="button"
                             className="btn btn-primary btn-lg"

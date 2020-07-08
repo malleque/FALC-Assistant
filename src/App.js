@@ -1,19 +1,76 @@
-import React from 'react';
-import button from 'react-bootstrap/Button';
+import React, {Component} from 'react';
 import Bar from './Components/Navigbar.js';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Form, Button} from 'react-bootstrap';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import Home from './Views/Home';
 import Files from './Views/Files';
 import Community from './Views/Community';
 import Settings from "./Views/Settings";
 import SignUp from "./Views/SignUp";
+import SignIn from './Views/SignIn';
 
 
 
-function App() {
+const INITIAL_STATE = {
+    email: '',
+    password: '',
+    error: null,
+};
+function Index(){
+    return(
+        <Redirect to='/SignIn'/>
+    );
+}
+
+class App extends React.Component{
+    render() {
+        if (window.location.pathname === '/SignIn')
+            return (
+                <div className="App">
+                    <header className="App-header">
+                        <Router>
+                            <div className="App">
+                                <Switch>
+                                    <Route path="/" exact>
+                                        <Index/>
+                                    </Route>
+                                    <Route path="/Home" component={Home}/>
+                                    <Route path="/Files" component={Files}/>
+                                    <Route path="/Settings" component={Settings}/>
+                                    <Route path="/Community" component={Community}/>
+                                    <Route path="/SignUp" component={SignUp}/>
+                                    <Route path="/SignIn" component={SignIn}/>
+
+                                </Switch>
+                            </div>
+                        </Router>
+                    </header>
+                </div>
+            );
+        if (window.location.pathname === '/SignUp')
+            return (
+                <div className="App">
+                    <header className="App-header">
+                        <Router>
+                            <div className="App">
+                                <Switch>
+                                    <Route path="/" exact>
+                                        <Index/>
+                                    </Route>
+                                    <Route path="/Home" component={Home}/>
+                                    <Route path="/Files" component={Files}/>
+                                    <Route path="/Settings" component={Settings}/>
+                                    <Route path="/Community" component={Community}/>
+                                    <Route path="/SignUp" component={SignUp}/>
+                                    <Route path="/SignIn" component={SignIn}/>
+
+                                </Switch>
+                            </div>
+                        </Router>
+                    </header>
+                </div>
+            );
   return (
     <div className="App">
         <header  className="App-header">
@@ -29,6 +86,7 @@ function App() {
                         <Route path="/Settings" component ={Settings}/>
                         <Route path="/Community" component ={Community}/>
                         <Route path="/SignUp" component ={SignUp}/>
+                        <Route path="/SignIn" component ={SignIn}/>
 
                     </Switch>
                 </div>
@@ -36,44 +94,8 @@ function App() {
         </header>
     </div>);
 }
-function Index() {
-    return (
-        <div className="App">
-            <header className="App-header-title">
-                <h1>
-                    Bienvenue sur le FALC-Assistant !
-                </h1>
-            </header>
-
-            <body className="App-body">
-            <Form>
-
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Mot de passe</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <div class="text-right" className="button-connect">
-                    <Button type="submit" className="btn btn-primary btn-lg">
-                        Se connecter
-                    </Button>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    <Link to={"/SignUp"}>
-                        <button type="button"
-                                className="btn btn-primary btn-lg"
-                        >Inscription
-                        </button>
-                    </Link>
-                </div>
-            </Form>
-            </body>
-        </div>
-    );
 }
+
+
 export default App;
+

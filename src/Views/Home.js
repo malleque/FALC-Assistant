@@ -2,19 +2,21 @@ import React from 'react';
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
+
+
 function Home(){
     return(
         <div className="Home">
-            <header className="Home-header">
                 <h1 className="text">Accueil</h1>
                 <Link to={"/"}>
-                    <button class="button"
-                            type="button"
-                            className="btn btn-primary btn-lg"
-                    >Modifier l'écriture</button>
-                </Link>
-            </header>
+                <button class="button"
+                        type="button"
+                        className="btn btn-primary btn-lg"
+                >Modifier l'écriture</button>
+            </Link>
+
             <body className="Home-body">
+
             <p>
                 Le falc assistant est une aide pour l'écriture en falc. <br/>
                 Vous trouverez sur ce site : <br/>
