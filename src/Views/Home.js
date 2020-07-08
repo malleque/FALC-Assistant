@@ -2,11 +2,9 @@ import React from 'react';
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
-import Bar from '../Components/Navigbar.js'
 function Home(){
     return(
         <div className="Home">
-            <Bar/>
             <header className="Home-header">
                 <h1 className="text">Accueil</h1>
                 <Link to={"/"}>

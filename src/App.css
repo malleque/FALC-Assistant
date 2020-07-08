@@ -7,16 +7,32 @@
   height: 4vmin;
   pointer-events: none;
 }
-.button{
-
-  width:40%;
+.form-control-connect{
+  size: 50px;
 }
-
+.button-connect{
+  text-align: center;
+  margin-right: 0px;
+}
+.form-connect{
+  text-align: right;
+  margin-right: 50px;
+}
 .App-header {
   background-color: #FFFFFF;
   min-height: 15vh;
-  margin-top: 100px;
-  margin-left: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align:left;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+.App-header-title {
+  background-color: #FFFFFF;
+  margin-top:50px;
+  margin-left:50px;
+  min-height: 15vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
