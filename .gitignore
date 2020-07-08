@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+    REACT_APP_API_KEY: "AIzaSyBoZXkcIGKnnMIR4JJN3iB3ql5DNMQhyMY",
+    REACT_APP_AUTH_DOMAIN: "falc-assistant.firebaseapp.com",
+    REACT_APP_DATABASE_URL: "https://falc-assistant.firebaseio.com",
+    REACT_APP_PROJECT_ID: "falc-assistant",
+    REACT_APP_STORAGE_BUCKET: "falc-assistant.appspot.com",
+    REACT_APP_MESSAGING_SENDER_ID: "64970348176",

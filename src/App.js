@@ -5,12 +5,14 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Form, Button} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import Login from './Views/Login';
 import Home from './Views/Home';
 import Files from './Views/Files';
 import Community from './Views/Community';
 import Settings from "./Views/Settings";
 import SignUp from "./Views/SignUp";
+
+
+
 function App() {
   return (
     <div className="App">
@@ -22,7 +24,6 @@ function App() {
                         <Route path="/" exact>
                             <Index/>
                         </Route>
-                        <Route path="/Login" component={Login}/>
                         <Route path="/Home" component={Home}/>
                         <Route path="/Files" component ={Files}/>
                         <Route path="/Settings" component ={Settings}/>
