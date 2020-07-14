@@ -4,8 +4,8 @@ import {BrowserRouter as Link, withRouter} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../Css/Navigbar.css'
 import Logo from '../logo_white.svg';
-import SignOutButton from '../Views/SignOut';
-
+import SignOutButton from './SignOut';
+import UserMenu from './UserMenu';
 class Navigbar extends React.Component{
     render(){
         return(
@@ -25,7 +25,10 @@ class Navigbar extends React.Component{
                 <Nav.Link href="/Community"><text className="navigbar-text">Communauté</text></Nav.Link>
                 </li>
                 <li>
-                    <Nav.Link href="/SignIn"><SignOutButton className="navigbar-button"/></Nav.Link>
+                    <Nav.Link href="/Settings"><text className="navigbar-text">Paramètres</text></Nav.Link>
+                </li>
+                <li>
+                    <UserMenu/>
                 </li>
             </Nav>
             {/*<Form inline>

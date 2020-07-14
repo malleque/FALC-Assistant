@@ -7,7 +7,10 @@
     height: 4vmin;
     pointer-events: none;
 }
-
+.button{
+    position : relative;
+    float: right;
+}
 .text{
     margin-right: 20px;
     display: inline-block;

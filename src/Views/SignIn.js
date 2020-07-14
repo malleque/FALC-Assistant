@@ -30,7 +30,7 @@ class SignInFormBase extends Component {
 
     onSubmit = event => {
         const { email, password } = this.state;
-
+        localStorage.setItem('email', email);
         this.props.firebase
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
@@ -81,10 +81,10 @@ class SignInFormBase extends Component {
                 <button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg">
                     Se connecter
                 </button>
-
-
+                <Link to={"/PasswordForget"}>Mot de passe oublié?</Link>
                 {error && <p>{e.message}</p>}
             </form>
+
         );
     }
 }

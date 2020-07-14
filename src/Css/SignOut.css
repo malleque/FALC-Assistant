@@ -2,4 +2,9 @@ button{
     border:none;
     background-color:#3949AB;
     color:red;
+    font-family: Arial;
+    font-size : 22px;
+    position : absolute;
+    margin-left: 500px;
+
 }

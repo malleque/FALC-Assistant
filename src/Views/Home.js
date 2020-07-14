@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
-
-function Home(){
+class Home extends Component{
+    constructor(props) {
+        super(props);
+    }
+    render(){
     return(
         <div className="Home">
+            <nav>
+
                 <h1 className="text">Accueil</h1>
                 <Link to={"/"}>
                 <button class="button"
@@ -14,6 +19,7 @@ function Home(){
                         className="btn btn-primary btn-lg"
                 >Modifier l'écriture</button>
             </Link>
+        </nav>
 
             <body className="Home-body">
 
@@ -36,6 +42,6 @@ function Home(){
             </p>
             </body>
         </div>
-    );
+    );}
 }
 export default Home
