@@ -1,9 +1,12 @@
 import React from 'react';
 import SignOutButton from "./SignOut";
 import {DropdownButton, Dropdown} from "react-bootstrap";
-
+//Non utilisé
 //Récupération du nom d'utilisateur
 var username = localStorage.getItem('email');
+if(username === null)
+    username=username;
+else
 username = username.substring(0, username.indexOf('@'));
 
 function UserMenu(){

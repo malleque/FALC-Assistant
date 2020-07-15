@@ -1,5 +1,40 @@
-.Home {
-    position:relative;
+html {
+    --font-family: Arial;
+}
+p {
+    font-family: var(--font-family);
+}
+.split {
+    height: 10%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    margin-top: 10%;
+
+}
+.splitD{
+    height: 80%;
+    width: 90%;
+    position: fixed;
+    bottom:0;
+    overflow-x: hidden;
+    margin-left: 10%;
+}
+.left{
+    left:0;
+}
+.right{
+    right:0;
+    border-style: none;
+}
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .Home-logo {
@@ -7,35 +42,25 @@
     height: 4vmin;
     pointer-events: none;
 }
-.button{
+.Home-button{
     position : relative;
     float: right;
-}
-.text{
-    margin-right: 20px;
+    margin-top: 5%;
     display: inline-block;
 }
-.Home-header {
+.text{
+    display: inline-block;
     text-align: left;
+    margin-top: 5%;
+    width: 100%;
+    font-family: "Times New Roman";
 }
 
-
-.Home-body{
-    justify-content: center;
-    color: black;
-    text-align:left;
-    margin-left: 50px;
-    font-size: x-large;
-}
 .Home-link {
     color: #61dafb;
 }
-
-@keyframes Home-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.Home-title{
+    position : relative;
+    float: left;
+    margin-top: 5%;
 }

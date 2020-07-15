@@ -28,7 +28,7 @@ class Navigbar extends React.Component{
                     <Nav.Link href="/Settings"><text className="navigbar-text">Paramètres</text></Nav.Link>
                 </li>
                 <li>
-                    <UserMenu/>
+                    <SignOutButton/>
                 </li>
             </Nav>
             {/*<Form inline>

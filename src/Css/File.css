@@ -1,3 +1,7 @@
+
+.file{
+    background-color: antiquewhite;
+}
 .split {
     height: 60%;
     width: 45%;
@@ -23,12 +27,27 @@
     border-style: solid;
 
 }
+.left-home{
+    left:0;
+    border-style:none;
+}
 .right{
     right:0;
     margin-right: 25px;
     border-width: 1px 1px 1px 1px;
     border-color: #000;
     border-style: solid;
+}
+.right-home{
+    right:0;
+}
+.splitD-home{
+    height: 80%;
+    width: 90%;
+    position: fixed;
+    bottom:0;
+    overflow-x: hidden;
+    margin-left: 10%;
 }
 .center{
     position: absolute;
