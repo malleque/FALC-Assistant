@@ -10,8 +10,13 @@ form{
 form, input{
     display: block;
 }
-form, button{
+.button-style{
+    display: inline-block;
     position: relative;
     float: left;
-    margin-right: 30px;
+    margin-right: 20%;
+}
+.signin-form{
+    text-align: center;
+    align-items: center;
 }

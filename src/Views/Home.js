@@ -49,20 +49,16 @@ class Home extends Component{
                 </Col>
             </Row>
             <Row class="mb-5">
-                <Col>
-                    <p style={{fontFamily: "Arial"}} >
+                    <p className="text" >
                     Le falc assistant est une aide pour l'écriture en falc. <br/>
                     Vous trouverez sur ce site : <br/>
                     1) une page avec vos différents documents<br/>
                     2) une page de modification avec les erreurs des textes.<br/>
                     3)une page communautaire pour la relecture
                 </p>
-                </Col>
-                <Col/>
             </Row>
 
             <Row class="mb-5">
-                <Col>
                     <p className="text">
                     Comment nous contacter ?<br/>
                     027/000.00.00<br/>
@@ -70,8 +66,7 @@ class Home extends Component{
                     3960 Sierre<br/>
                     Exemple@falc-assistant.ch<br/>
                     </p>
-                </Col>
-                <Col/>
+
             </Row>
         </Container>
 

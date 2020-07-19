@@ -97,27 +97,23 @@ function Community() {
                     </Col>
                     <Col>
                         <div className="Home-button">
-                            <Link to={"/CommunityO"}>
-                                <button type="button"
-                                        className="btn btn-primary btn-lg" type="submit"
-                                >Community autres utilisateurs
-                                </button>
+                            <Link to={"/CommunityNew"}>
+                            <button type="button"
+                                    className="btn btn-primary btn-lg" type="submit"
+                            >Nouvelles demandes
+                            </button>
                             </Link>
                         </div>
                     </Col>
                 </Row>
             </Container>
-
-
             <Table responsive>
                 <thead>
                 <tr>
-                    <th>Lastname</th>
-                    <th>Name</th>
-                    <th>Rôle</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Document</th>
-                    <th>Date</th>
-                    <th>Version</th>
+                    <th>Commentaire</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,11 +121,23 @@ function Community() {
                     <tr key={item.id}>
                         <td>{item.lastname}</td>
                         <td>{item.name}</td>
-                        <td>{item.role}</td>
+                        <td>Coronavirus</td>
                         <td>
-                            <Link to="/ContactForm"
+                            <Link to="/Community"
                                   onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                contacter
+                                Commentaire
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to="/Community"
+                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
+                                Accepter
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to="/Community" style={{color: "red"}}
+                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
+                                Refuser
                             </Link>
                         </td>
                     </tr>

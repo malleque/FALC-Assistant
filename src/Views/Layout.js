@@ -1,12 +1,15 @@
-import React from 'react';
-import {Col, Table, Container, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import CKEditor from '@ckeditor/ckeditor5-react';
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import React from "react";
+import '../Css/Home.css';
 import button from "react-bootstrap/Button";
+import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb} from "react-bootstrap";
+
 const listFiles = [
     {
-        id:'1',
+        id: '1',
         document: 'coronavirus',
-        version : 'texte initial',
+        version: 'texte initial',
         modification: '13.07.2020',
         data: 'Ouverts ou autorisés depuis le 6 juin\n' +
             'Assemblées de sociétés jusqu’à 300 personnes (délai pour la convocation d’assemblées écrites ou électroniques : 1er juillet)\n' +
@@ -20,9 +23,9 @@ const listFiles = [
             'Dans la restauration, activités comme le billard, les fléchettes, la musique en direct, à condition de :'
     },
     {
-        id:'2',
+        id: '2',
         document: 'coronavirus',
-        version : 'version de travail 1',
+        version: 'version de travail 1',
         modification: '13.07.2020',
         data: 'Restaurants et bars\n' +
             'Il est à nouveau possible de se réunir à plus de 4 personnes au restaurant ou dans un bar.\n' +
@@ -45,105 +48,88 @@ const listFiles = [
             'Les manifestations jusqu’à 300 personnes au maximum'
     },
     {
-        id:'3',
+        id: '3',
         document: 'réunion',
-        version : 'texte initial',
+        version: 'texte testage',
         modification: '15.07.2020',
         data: 'test'
     },
 
 ];
-const listPeople = [
-    {
-        id:'1',
-        mail:'praz.florent@gmail.com',
-        lastname: 'Praz',
-        name: 'Florent',
-        role: 'Expert Falc',
-        tarif: '10 chf'
-    },
-    {
-        id:'2',
-        mail:'dayer.arnaud@gmail.com',
-        lastname: 'Dayer',
-        name: 'Arnaud',
-        role: 'Groupe de relecture',
-        tarif: '20 chf'
-    },
-    {
-        id:'3',
-        mail:'clerc.isaac@gmail.com',
-        lastname: 'Clerc',
-        name: 'Isaac',
-        role: 'Expert juridique',
-        tarif: '10 chf'
-    },
-    {
-        id:'4',
-        mail:'dettwiler.yann@gmail.com',
-        lastname: 'Dettwiler',
-        name: 'Yann',
-        role: 'Expert médical',
-        tarif: '40 chf'
-    },
-]
-function Community() {
-    return (
+let tmpFileI;
+{listFiles.map((item) => {
+        if (item.id == "1") {
+            tmpFileI = item;
+        }
+    }
+)};
+let tmpFile;
+{listFiles.map((item) => {
+        if (item.id == localStorage.getItem("documentTitle")) {
+            tmpFile = item;
+        }
+    }
+)};
+function Layout() {
+    return(
         <div>
             <Container>
-                <Row>
-                    <Col>
-                        <h1>Contacts</h1>
+                <Row className="justify-content-md-center">
+                    <Col sm>
+                        <div className="Home-title">
+                            <h2>{tmpFile.document}</h2>
+                        </div>
                     </Col>
-                    <Col>
+                    <Col sm>
                         <div className="Home-button">
-                            <Link to={"/CommunityO"}>
-                                <button type="button"
-                                        className="btn btn-primary btn-lg" type="submit"
-                                >Community autres utilisateurs
-                                </button>
-                            </Link>
+                            <button type="button"
+                                    className="btn btn-primary btn-lg" type="submit"
+                            >Sauvegarder
+                            </button>
                         </div>
                     </Col>
                 </Row>
+                <Row>
+                    <Breadcrumb>
+                        <Breadcrumb.Item href="/File">Transcription</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Mise en page</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/FindPeople">Trouver un contact</Breadcrumb.Item>
+
+                    </Breadcrumb>
+                </Row>
+                <Row className="justify-content-md-center">
+                    <Col sm>
+                        <div className="Home-title">
+                            <h3>{tmpFile.version}</h3>
+                        </div>
+                    </Col>
+                </Row>
+
+                <Row className="justify-content-md-center" >
+                    <Col sm key={localStorage.getItem("documentTitle")}>
+                        <CKEditor
+                            editor={DecoupledEditor}
+                            onInit={editor => {
+                                console.log('Editor is ready to use!', editor);
+
+                                // Insert the toolbar before the editable area.
+                                editor.ui.getEditableElement().parentElement.insertBefore(
+                                    editor.ui.view.toolbar.element,
+                                    editor.ui.getEditableElement()
+                                );
+                            }}
+                            onChange={(event, editor) => console.log({event, editor})}
+                            editor={DecoupledEditor}
+                            data={tmpFile.data}
+                            config={DecoupledEditor}
+                        />
+                    </Col>
+
+                </Row>
+
             </Container>
 
-
-            <Table responsive>
-                <thead>
-                <tr>
-                    <th>Lastname</th>
-                    <th>Name</th>
-                    <th>Rôle</th>
-                    <th>Document</th>
-                    <th>Date</th>
-                    <th>Version</th>
-                </tr>
-                </thead>
-                <tbody>
-                {listPeople.map(item=>(
-                    <tr key={item.id}>
-                        <td>{item.lastname}</td>
-                        <td>{item.name}</td>
-                        <td>{item.role}</td>
-                        <td>
-                            <Link to="/ContactForm"
-                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                contacter
-                            </Link>
-                        </td>
-                    </tr>
-                ))}
-                {listFiles.map(file=>(
-                    <tr key={file.id}>
-                        <td>{file.document}</td>
-                        <td>{file.document}</td>
-                        <td>{file.version}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
         </div>
-    );
+    )
 }
-export default Community
+export default Layout;

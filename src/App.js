@@ -10,6 +10,11 @@ import Settings from "./Views/Settings";
 import SignUp from "./Views/SignUp";
 import SignIn from './Views/SignIn';
 import File from './Views/File';
+import Layout from './Views/Layout';
+import ContactForm from "./Views/ContactForm";
+import FindPeople from './Views/FindPeople';
+import CommunityNew from './Views/CommunityNew';
+import CommunityOthers from './Views/CommunityOthers';
 import {withAuthentication} from './Components/Session';
 import PasswordForget from './Components/PasswordForget';
 
@@ -55,7 +60,11 @@ class App extends Component {
                                         <Route path="/Settings" component ={Settings}/>
                                         <Route path="/Community" component ={Community}/>
                                         <Route path="/File" component ={File}/>
-
+                                        <Route path="/Layout" component ={Layout}/>
+                                        <Route path="/FindPeople" component ={FindPeople}/>
+                                        <Route path="/ContactForm" component ={ContactForm}/>
+                                        <Route path="/CommunityO" component ={CommunityOthers}/>
+                                        <Route path="/CommunityNew" component ={CommunityNew}/>
 
                                     </Switch>
                                 </div>

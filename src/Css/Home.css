@@ -64,3 +64,32 @@ p {
     float: left;
     margin-top: 5%;
 }
+.popover{
+    max-width : 100%;
+    width: auto;
+}
+.form-control{
+    max-width: 60%;
+}
+.popover-button{
+    position:relative;
+    float:right;
+    margin-right: 30%;
+
+}
+.dropdown-button{
+    position:relative;
+    float:right;
+    margin-right: 77%;
+}
+.contactform-input{
+    text-align: left;
+    width:80%;
+    margin-left: 20%;
+}
+.contactform-title{
+    margin-left: 15%;
+}
+.contactform-div{
+    border : thick #0000FF;
+}

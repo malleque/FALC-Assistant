@@ -1,7 +1,7 @@
-import React from 'react';
-import {Col, Table, Container, Row} from "react-bootstrap";
+import React from "react";
+import '../Css/Home.css';
+import {Col, Container, Form, Row, Breadcrumb, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import button from "react-bootstrap/Button";
 const listFiles = [
     {
         id:'1',
@@ -87,63 +87,64 @@ const listPeople = [
         tarif: '40 chf'
     },
 ]
-function Community() {
-    return (
-        <div>
+let tmpPeople;
+{listPeople.map((item) => {
+        if (item.id == localStorage.getItem("personContact")) {
+            tmpPeople = item;
+        }
+    }
+)};
+    let tmpFile;
+{listFiles.map((item) => {
+        if (item.id == localStorage.getItem("documentTitle")) {
+            tmpFile = item;
+        }
+    }
+)};
+
+
+    function ContactForm(){
+        return(
             <Container>
                 <Row>
-                    <Col>
-                        <h1>Contacts</h1>
-                    </Col>
-                    <Col>
-                        <div className="Home-button">
-                            <Link to={"/CommunityO"}>
-                                <button type="button"
-                                        className="btn btn-primary btn-lg" type="submit"
-                                >Community autres utilisateurs
-                                </button>
-                            </Link>
-                        </div>
+                    <Col className="contactform-title">
+                        <h1>Formulaire de contact</h1>
                     </Col>
                 </Row>
+                <div className="contactform-div">
+                <Row>
+                    <Col className="contactform-title">
+                        <h2>{tmpPeople.lastname} {tmpPeople.name}</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="contactform-input">
+                        <h3>{tmpPeople.role}</h3>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="contactform-input">
+                        <h3>{tmpFile.document}</h3>
+                    </Col>
+                </Row>
+
+                    <Form className="contactform-input">
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Laisser un commentaire:</Form.Label>
+                            <Form.Control as="textarea" rows="10" />
+                        </Form.Group>
+                    </Form>
+                </div>
+                <Link to={"/Files"}>
+                            <Button variant="primary" size="lg"
+                            >Contacter
+                            </Button>
+                </Link>
+
             </Container>
 
 
-            <Table responsive>
-                <thead>
-                <tr>
-                    <th>Lastname</th>
-                    <th>Name</th>
-                    <th>Rôle</th>
-                    <th>Document</th>
-                    <th>Date</th>
-                    <th>Version</th>
-                </tr>
-                </thead>
-                <tbody>
-                {listPeople.map(item=>(
-                    <tr key={item.id}>
-                        <td>{item.lastname}</td>
-                        <td>{item.name}</td>
-                        <td>{item.role}</td>
-                        <td>
-                            <Link to="/ContactForm"
-                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                contacter
-                            </Link>
-                        </td>
-                    </tr>
-                ))}
-                {listFiles.map(file=>(
-                    <tr key={file.id}>
-                        <td>{file.document}</td>
-                        <td>{file.document}</td>
-                        <td>{file.version}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
-        </div>
-    );
-}
-export default Community
+        );
+    };
+    export default ContactForm
+

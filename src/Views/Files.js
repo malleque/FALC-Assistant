@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import {Link} from "react-router-dom";
 import button from "react-bootstrap/Button";
-import {Table} from "react-bootstrap";
+import {Col, Container, Row, Table, Button, Overlay, Popover, Form, Dropdown, DropdownButton} from "react-bootstrap";
+import '../Css/Home.css';
 const listFiles = [
     {
         id:'1',
@@ -53,37 +54,100 @@ const listFiles = [
     },
 
 ];
-function Files() {
-    return (
-        <div>
-        <h1>Documents</h1>
-            <div>
-                <Table responsive>
-                    <thead>
-                    <tr>
-                        <th>Document</th>
-                        <th>Date</th>
-                        <th>Version</th>
-                        <th>Lien</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+var version = "Version";
+    function Files(){
 
-                    {listFiles.map(item=>(
-                        <tr key={item.id}>
-                            <td>{item.document}</td>
-                            <td>{item.version}</td>
-                            <td>Modifié le {item.modification}</td>
-                            <td><Link to={"/File"} onClick={localStorage.setItem("TitreDocument",item.id)}>
-                            {item.document}
-                        </Link></td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </Table>
-            </div>
-        </div>
+            const [show, setShow] = useState(false);
+            const [target, setTarget] = useState(null);
+            const ref = useRef(null);
 
-);
-}
-export default Files
+            const handleClick = (event) => {
+                setShow(!show);
+                setTarget(event.target);
+            }
+
+            return (
+                <Container>
+                    <Row className="justify-content-md-center">
+                        <Col sm>
+                            <div className="Home-title">
+                                <h2>Documents</h2>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div ref={ref}>
+                                <Button onClick={handleClick}>Nouveau</Button>
+
+                                <Overlay
+                                    show={show}
+                                    target={target}
+                                    placement="bottom"
+                                    container={ref.current}
+                                    containerPadding={50}
+                                >
+                                    <Popover id="popover-contained" md="auto">
+                                        <Popover.Title as="h3">Nouveau document</Popover.Title>
+                                        <Popover.Content>
+                                            <Form>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Nom du document</Form.Label>
+                                                    <Form.Control placeholder="Nom du document" />
+                                                </Form.Group>
+                                                <DropdownButton className ="dropdown-button" id="dropdown-basic-button" title={version}>
+                                                    <Dropdown.Item onClick={version="Texte initial"} href="#/expert">Texte initial</Dropdown.Item>
+                                                    <Dropdown.Item href="#/relecture">Version de travail</Dropdown.Item>
+                                                    <Dropdown.Item href="#/juridique">Version relue</Dropdown.Item>
+                                                    <Dropdown.Item href="#/medical">Version validée</Dropdown.Item>
+                                                </DropdownButton>
+                                                <Button className="popover-button" variant="primary" type="submit">
+                                                    Créer
+                                                </Button>
+                                            </Form>
+
+                                        </Popover.Content>
+                                    </Popover>
+                                </Overlay>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Table responsive>
+                                    <thead>
+                                    <tr>
+                                        <th>Document</th>
+                                        <th>Version</th>
+                                        <th>Date</th>
+                                        <th>Lien</th>
+                                        <th/>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {listFiles.map(item => (
+                                        <tr key={item.id}>
+                                            <td>{item.document}</td>
+                                            <td>{item.version}</td>
+                                            <td>Modifié le {item.modification}</td>
+                                            <td>
+                                                <Link to="/File"
+                                                      onClick={() =>(localStorage.setItem("documentTitle", item.id))}>
+                                                    {item.document}
+                                                </Link>
+                                            </td>
+                                            <td><Link to="/Files" style={{color: "red"}}>
+                                                Supprimer
+                                            </Link>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </Table>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            );
+    }
+export default Files;

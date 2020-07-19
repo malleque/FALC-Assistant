@@ -7,7 +7,7 @@ import {Nav} from "react-bootstrap";
 
 //Création du bouton pour se déconnecter
 const SignOutButton = ({ firebase }) => (
-    <Nav.Link onClick={firebase.doSignOut} href="/Settings"><text className="navigbar-text">
+    <Nav.Link onClick={firebase.doSignOut} href="/SignIn"><text className="navigbar-text">
         Se déconnecter </text>
     </Nav.Link>
 );

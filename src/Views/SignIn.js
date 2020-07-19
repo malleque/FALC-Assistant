@@ -3,15 +3,24 @@ import {Link, withRouter} from 'react-router-dom';
 import { compose } from 'recompose';
 import { withFirebase } from '../Components/Firebase';
 import '../Css/SignIn.css'
-import button from "react-bootstrap/Button";
+import {Button, Container, Row, Col} from "react-bootstrap";
 
 var e = new Error("Le mot de passe est incorrect ou l'adresse mail n'existe pas.");
 
 const SignInPage = () => (
     <div>
-        <h1>Bienvenue sur le FALC Assistant!</h1>
-        <h2>Se connecter</h2>
-        <SignInForm />
+        <Container>
+            <Row>
+                <h1>Bienvenue sur le FALC Assistant!</h1>
+            </Row>
+            <Row>
+                <h2>Se connecter</h2>
+            </Row>
+            <Row><div className="signin-formulaire"><SignInForm /></div> </Row>
+        </Container>
+
+
+
     </div>
 );
 
@@ -55,13 +64,14 @@ class SignInFormBase extends Component {
         const isInvalid = password === '' || email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit}
+            className="signin-form">
                 <input
                     name="email"
                     value={email}
                     onChange={this.onChange}
                     type="text"
-                    placeholder="Mail"
+                    placeholder="Adresse email"
                 />
                 <br/>
                 <input
@@ -73,17 +83,16 @@ class SignInFormBase extends Component {
                 />
                 <br/>
                 <Link to={"/SignUp"}>
-                    <button type="button"
-                            className="btn btn-primary btn-lg"
-                    >S'inscrire
-                    </button>
-                </Link>
-                <button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg">
-                    Se connecter
-                </button>
+                            <Button variant="primary" size="lg" block
+                            >S'inscrire
+                            </Button>
+                </Link>{' '}
+                            <Button disabled={isInvalid} type="submit" variant="primary" size="lg" block>
+                                Se connecter
+                            </Button>
                 <Link to={"/PasswordForget"}>Mot de passe oublié?</Link>
                 {error && <p>{e.message}</p>}
-            </form>
+                </form>
 
         );
     }
