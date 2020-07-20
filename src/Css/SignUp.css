@@ -17,3 +17,6 @@ form, button{
     float: left;
     margin-right: 30px;
 }
+.titre{
+    text-align: left;
+}

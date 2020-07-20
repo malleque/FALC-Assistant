@@ -8,6 +8,7 @@ import Firebase, {FirebaseContext} from './Components/Firebase';
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
+        <title>FALC-Assistant</title>
         <App />
     </FirebaseContext.Provider>,
     document.getElementById('root')

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import {compose} from 'recompose';
 import {withFirebase} from '../Components/Firebase'
 import '../Css/SignUp.css'
-import button from "react-bootstrap/Button";
+import {button, Col, Form} from "react-bootstrap";
 var e = new Error("Cette adresse mail possède déjà un compte. Merci de vous connecter.");
 const SignUpPage = () => (
     <div>
@@ -66,11 +66,19 @@ class SignUpFormBase extends Component {
         return(
             <form onSubmit={this.onSubmit}>
                 <input
-                    name="username"
+                    name="lastname"
                     value={username}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Nom"
+                />
+                <br/>
+                <input
+                    name="name"
+                    value={username}
+                    onChange={this.onChange}
+                    type="text"
+                    placeholder="Prénom"
                 />
                 <br/>
                 <input
@@ -79,6 +87,43 @@ class SignUpFormBase extends Component {
                     onChange={this.onChange}
                     type="text"
                     placeholder="Email"
+                />
+                <br/>
+                <h2 className="titre">Rôle :</h2>
+                <Col sm={4}>
+
+                    <Form.Check
+                        type="radio"
+                        label="Utilisateur"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios1"
+                    />
+                    <Form.Check
+                        type="radio"
+                        label="Expert FALC"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios2"
+                    />
+                    <Form.Check
+                        type="radio"
+                        label="Groupe de relecture"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios3"
+                    />
+                    <Form.Check
+                        type="radio"
+                        label="Expert juridique"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios3"
+                    />
+                </Col>
+                <br/>
+                <input
+                    name="tarif"
+                    value={passwordOne}
+                    onChange={this.onChange}
+                    type="text"
+                    placeholder="Tarif"
                 />
                 <br/>
                 <input

@@ -82,15 +82,20 @@ class SignInFormBase extends Component {
                     placeholder="Mot de passe"
                 />
                 <br/>
+                <Container>
+                    <Row>
                 <Link to={"/SignUp"}>
-                            <Button variant="primary" size="lg" block
+                            <Button className="btn btn-primary btn-lg"
                             >S'inscrire
                             </Button>
-                </Link>{' '}
-                            <Button disabled={isInvalid} type="submit" variant="primary" size="lg" block>
-                                Se connecter
-                            </Button>
+                </Link>
+
+                <Button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg" >
+                    Se connecter
+                </Button>
                 <Link to={"/PasswordForget"}>Mot de passe oublié?</Link>
+                    </Row>
+                </Container>
                 {error && <p>{e.message}</p>}
                 </form>
 

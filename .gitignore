@@ -28,3 +28,4 @@ yarn-error.log*
     REACT_APP_PROJECT_ID: "falc-assistant",
     REACT_APP_STORAGE_BUCKET: "falc-assistant.appspot.com",
     REACT_APP_MESSAGING_SENDER_ID: "64970348176",
+.vercel

@@ -67,7 +67,7 @@ var version = "Version";
             }
 
             return (
-                <Container>
+                <Container fluid>
                     <Row className="justify-content-md-center">
                         <Col sm>
                             <div className="Home-title">
