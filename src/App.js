@@ -17,6 +17,7 @@ import CommunityNew from './Views/CommunityNew';
 import CommunityOthers from './Views/CommunityOthers';
 import {withAuthentication} from './Components/Session';
 import PasswordForget from './Components/PasswordForget';
+import firebase from 'firebase';
 
 const INITIAL_STATE = {
     email: '',
@@ -36,12 +37,32 @@ class App extends Component {
             authUser: null,
         };
     }
+
     componentDidMount() {
         this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
             authUser
                 ? this.setState({ authUser })
                 : this.setState({ authUser: null });
         });
+        //"once" implique qu'il va aller le cherche qu'une fois "on" va utiliser à chaque fois qu'il a un changement, la fonction va etre refaite
+        //firebase.database().ref('users').on('value', (data)=>{
+        //    console.log(data.toJSON());
+        //})
+        //firebase.database().ref('users/001').update({
+        //    name: 'michel'
+        //})
+        //firebase.database().ref('users/001').remove();
+        //firebase.database().ref('users/001').set(
+        //    {
+        //        name: 'Arnaud',
+        //        lastname: 'Dayer'
+        //    }
+        //).then(()=>{
+        //    console.log('INSERTED!')
+        //}).catch((error)=>{
+        //    console.log('INSERTED!')
+        //});
+
     }
     componentWillUnmount() {
         this.listener();

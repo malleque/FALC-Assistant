@@ -3,7 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import {compose} from 'recompose';
 import {withFirebase} from '../Components/Firebase'
 import '../Css/SignUp.css'
-import {button, Col, Form} from "react-bootstrap";
+import button from "react-bootstrap/Button";
+import firebase from "firebase";
 var e = new Error("Cette adresse mail possède déjà un compte. Merci de vous connecter.");
 const SignUpPage = () => (
     <div>
@@ -14,8 +15,10 @@ const SignUpPage = () => (
 );
 
 const INITIAL_STATE = {
-    username: '',
+    name: '',
+    lastname: '',
     email: '',
+    tarif: '',
     passwordOne: '',
     passwordTwo: '',
     error: null,
@@ -29,9 +32,20 @@ class SignUpFormBase extends Component {
     }
 
     onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
+        const { name, lastname, email, tarif, passwordOne } = this.state;
 
-
+        firebase.database().ref('users/002').set(
+            {
+                name: name,
+                lastname: lastname,
+                email: email,
+                tarif: tarif
+            }
+        ).then(()=>{
+            console.log('INSERTED!')
+        }).catch((error)=>{
+            console.log('INSERTED!')
+        });
         this.props.firebase
             .doCreateUserWithEmailAndPassword(email, passwordOne)
             .then(authUser => {
@@ -52,8 +66,10 @@ class SignUpFormBase extends Component {
 
     render() {
         const {
-            username,
+            name,
+            lastname,
             email,
+            tarif,
             passwordOne,
             passwordTwo,
             error,
@@ -61,24 +77,26 @@ class SignUpFormBase extends Component {
         const isInvalid =
             passwordOne !== passwordTwo ||
             passwordOne === '' ||
+            tarif === '' ||
             email === '' ||
-            username === '';
+            lastname === '' ||
+            name === '';
         return(
             <form onSubmit={this.onSubmit}>
                 <input
-                    name="lastname"
-                    value={username}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Nom"
-                />
-                <br/>
-                <input
                     name="name"
-                    value={username}
+                    value={name}
                     onChange={this.onChange}
                     type="text"
                     placeholder="Prénom"
+                />
+                <br/>
+                <input
+                    name="lastname"
+                    value={lastname}
+                    onChange={this.onChange}
+                    type="text"
+                    placeholder="Nom"
                 />
                 <br/>
                 <input
@@ -89,40 +107,11 @@ class SignUpFormBase extends Component {
                     placeholder="Email"
                 />
                 <br/>
-                <h2 className="titre">Rôle :</h2>
-                <Col sm={4}>
-
-                    <Form.Check
-                        type="radio"
-                        label="Utilisateur"
-                        name="formHorizontalRadios"
-                        id="formHorizontalRadios1"
-                    />
-                    <Form.Check
-                        type="radio"
-                        label="Expert FALC"
-                        name="formHorizontalRadios"
-                        id="formHorizontalRadios2"
-                    />
-                    <Form.Check
-                        type="radio"
-                        label="Groupe de relecture"
-                        name="formHorizontalRadios"
-                        id="formHorizontalRadios3"
-                    />
-                    <Form.Check
-                        type="radio"
-                        label="Expert juridique"
-                        name="formHorizontalRadios"
-                        id="formHorizontalRadios3"
-                    />
-                </Col>
-                <br/>
                 <input
                     name="tarif"
-                    value={passwordOne}
+                    value={tarif}
                     onChange={this.onChange}
-                    type="text"
+                    type="number"
                     placeholder="Tarif"
                 />
                 <br/>
@@ -159,7 +148,7 @@ class SignUpFormBase extends Component {
 const SignUpForm = compose(
     withRouter,
     withFirebase,
-    )(SignUpFormBase);
+)(SignUpFormBase);
 
 export default SignUpPage;
 
