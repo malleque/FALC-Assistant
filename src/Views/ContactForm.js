@@ -1,7 +1,8 @@
-import React from "react";
+import React, {Component} from "react";
 import '../Css/Home.css';
 import {Col, Container, Form, Row, Breadcrumb, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import firebase from "firebase";
 const listFiles = [
     {
         id:'1',
@@ -102,49 +103,73 @@ let tmpPeople;
     }
 )};
 
-
-    function ContactForm(){
-        return(
-            <Container>
-                <Row>
-                    <Col className="contactform-title">
-                        <h1>Formulaire de contact</h1>
-                    </Col>
-                </Row>
-                <div className="contactform-div">
-                <Row>
-                    <Col className="contactform-title">
-                        <h2>{tmpPeople.lastname} {tmpPeople.name}</h2>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="contactform-input">
-                        <h3>{tmpPeople.role}</h3>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="contactform-input">
-                        <h3>{tmpFile.document}</h3>
-                    </Col>
-                </Row>
-
-                    <Form className="contactform-input">
-                        <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Laisser un commentaire:</Form.Label>
-                            <Form.Control as="textarea" rows="10" />
-                        </Form.Group>
-                    </Form>
-                </div>
-                <Link to={"/Files"}>
-                            <Button variant="primary" size="lg"
-                            >Contacter
-                            </Button>
-                </Link>
-
-            </Container>
-
-
+    class ContactForm extends Component {
+        state = {
+            text: ""
+        }
+        handleText = e => {
+            this.setState({
+                text: e.target.value
+            })
+        }
+        handleSubmit=e =>{
+            let messageRef = firebase.database().ref('messages').orderByKey().limitToLast(1000);
+            firebase.database().ref('messages').push(
+                {
+                    message : this.state.text,
+                    lastNameS : tmpPeople.lastname,
+                    nameS: tmpPeople.name,
+                    sender: localStorage.getItem("userConnected")
+                }
         );
-    };
+            this.setState({
+                text: ""
+            })
+        }
+
+        render() {
+            return (
+                <Container>
+                    <Row>
+                        <Col className="contactform-title">
+                            <h1>Formulaire de contact</h1>
+                        </Col>
+                    </Row>
+                    <div className="contactform-div">
+                        <Row>
+                            <Col className="contactform-title">
+                                <h2>{tmpPeople.lastname} {tmpPeople.name}</h2>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="contactform-input">
+                                <h3>{tmpPeople.role}</h3>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="contactform-input">
+                                <h3>{tmpFile.document}</h3>
+                            </Col>
+                        </Row>
+
+                        <Form className="contactform-input">
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Laisser un commentaire:</Form.Label>
+                                <Form.Control onChange={this.handleText} as="textarea" rows="10"/>
+                            </Form.Group>
+                        </Form>
+                    </div>
+                    <Link to={"/Files"}>
+                        <Button onClick={this.handleSubmit} variant="primary" size="lg"
+                        >Contacter
+                        </Button>
+                    </Link>
+
+                </Container>
+
+
+            );
+        };
+    }
     export default ContactForm
 

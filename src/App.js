@@ -17,6 +17,7 @@ import CommunityNew from './Views/CommunityNew';
 import CommunityOthers from './Views/CommunityOthers';
 import {withAuthentication} from './Components/Session';
 import PasswordForget from './Components/PasswordForget';
+import NewFile from './Views/NewFile';
 import firebase from 'firebase';
 
 const INITIAL_STATE = {
@@ -86,6 +87,7 @@ class App extends Component {
                                         <Route path="/ContactForm" component ={ContactForm}/>
                                         <Route path="/CommunityO" component ={CommunityOthers}/>
                                         <Route path="/CommunityNew" component ={CommunityNew}/>
+                                        <Route path="/NewFile" component ={NewFile}/>
 
                                     </Switch>
                                 </div>

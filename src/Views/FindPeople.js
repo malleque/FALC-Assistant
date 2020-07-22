@@ -116,8 +116,8 @@ function FindPeople() {
         <Container>
             <Row className="justify-content-md-center">
                 <Col sm>
-                    <div className="Home-title">
-                        <h2>Trouver un contact</h2>
+                    <div>
+                        <h1>Trouver un contact</h1>
                     </div>
                 </Col>
                 <Col sm>
@@ -146,7 +146,7 @@ function FindPeople() {
             </Row>
             <Row>
                 <Col>
-                    <h3 className="Home-title">{tmpFile.version}</h3>
+                    <h2>{tmpFile.version}</h2>
                 </Col>
             </Row>
             <Row>
@@ -157,6 +157,7 @@ function FindPeople() {
                         <th>Lastname</th>
                         <th>Name</th>
                         <th>Rôle</th>
+                        <th>tarif</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -164,6 +165,7 @@ function FindPeople() {
                         <tr key={item.id}>
                             <td>{item.lastname}</td>
                             <td>{item.name}</td>
+                            <td>{item.tarif}</td>
                             <td>{item.role}</td>
                             <td>
                                 <Link to="/ContactForm"

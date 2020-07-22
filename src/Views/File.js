@@ -1,10 +1,11 @@
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import React from "react";
+import React, {Component} from "react";
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
-import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb, Button} from "react-bootstrap";
+import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb, ProgressBar} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import firebase from 'firebase';
 
 const listFiles = [
     {
@@ -71,8 +72,30 @@ let tmpFile;
     }
 }
 )};
+const percent = 86;
+var dataTest="";
+class File extends Component {
 
-function File() {
+    state = {
+        data: ""
+    }
+    handleData = e => {
+        this.setState({
+            data: dataTest
+        })
+    }
+    handleSubmit=e =>{
+        let texteRef = firebase.database().ref('test').orderByKey().limitToLast(1000);
+        firebase.database().ref('test').push(
+            {
+               data: this.state.data
+            }
+        );
+        this.setState({
+            text: ""
+        })
+    }
+    render(){
     if(!window.location.hash) {
         window.location = window.location + '#loaded';
         window.location.reload();
@@ -83,37 +106,31 @@ function File() {
 
                 <div>
                             <Container fluid>
+                                <Row>
+                                    <Col>
+                                        <Breadcrumb>
+                                            <Breadcrumb.Item active>Transcription</Breadcrumb.Item>
+                                            <Breadcrumb.Item href="/Layout">Mise en page</Breadcrumb.Item>
+                                            <Breadcrumb.Item href="/FindPeople">Trouver un contact</Breadcrumb.Item>
+                                        </Breadcrumb>
+                                    </Col>
+                                </Row>
                     <Row className="justify-content-md-center">
                         <Col sm>
-                            <div className="Home-title">
-                                <h2>{tmpFile.document}</h2>
+                            <div>
+                                <h1>{tmpFile.document}</h1>
                             </div>
                         </Col>
+
                         <Col sm>
                             <div className="Home-button">
-                                <button type="button"
-                                        className="btn btn-primary btn-lg" type="submit"
-                                >Paramètres
-                                </button>
-                            </div>
-                        </Col>
-                        <Col sm>
-                            <div className="Home-button">
-                            <button type="button"
+                            <button onClick={this.handleSubmit} type="button"
                                     className="btn btn-primary btn-lg" type="submit"
                             >Sauvegarder
                             </button>
                             </div>
                         </Col>
                     </Row>
-                                <Row>
-                                    <Breadcrumb>
-                                        <Breadcrumb.Item active>Transcription</Breadcrumb.Item>
-                                        <Breadcrumb.Item href="/Layout">Mise en page</Breadcrumb.Item>
-                                        <Breadcrumb.Item href="/FindPeople">Trouver un contact</Breadcrumb.Item>
-
-                                    </Breadcrumb>
-                                </Row>
                                 <Row className="justify-content-md-center">
                                     <Col sm>
                                         <div className="Home-title">
@@ -126,27 +143,14 @@ function File() {
                                         </div>
                                     </Col>
                                 </Row>
-
-                    <Row className="justify-content-md-center" >
+                                <Row>
                         <Col sm>
-                            <CKEditor
-                                editor={DecoupledEditor}
-                                onInit={editor => {
-                                    console.log('Editor is ready to use!', editor);
+                                <p className="file-text">
+                                {tmpFileI.data}
+                            </p>
+                        </Col >
+                        <Col key={localStorage.getItem("documentTitle")}>
 
-                                    // Insert the toolbar before the editable area.
-                                    editor.ui.getEditableElement().parentElement.insertBefore(
-                                        editor.ui.view.toolbar.element,
-                                        editor.ui.getEditableElement()
-                                    );
-                                }}
-                                onChange={(event, editor) => console.log({event, editor})}
-                                editor={DecoupledEditor}
-                                data={tmpFileI.data}
-                                config={DecoupledEditor}
-                            />
-                        </Col>
-                        <Col sm key={localStorage.getItem("documentTitle")}>
                                 <CKEditor
                                     editor={DecoupledEditor}
                                     onInit={editor => {
@@ -158,19 +162,31 @@ function File() {
                                             editor.ui.getEditableElement()
                                         );
                                     }}
-                                    onChange={(event, editor) => console.log({event, editor})}
+                                    onChange={(event, editor) => {
+                                        dataTest = editor.getData();
+                                        this.handleData()
+                                        console.log({event, editor, dataTest});
+                                    }}
                                     editor={DecoupledEditor}
                                     data={tmpFile.data}
                                     config={DecoupledEditor}
                                 />
                             </Col>
 
+
                     </Row>
+                                <Row>
+                                    <Col/>
+                                    <Col>
+                                        <h3>{percent} % compatible FALC</h3>
+                                        <ProgressBar variant="success" now={percent} label={`${percent}%`} srOnly />
+                                    </Col>
+                                </Row>
 
                 </Container>
 
                 </div>
-                )
-            }
-
+                );
+            };
+}
             export default File;

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Css/SignOut.css'
 import {Link} from "react-router-dom";
 import { withFirebase } from '../Components/Firebase';
 import {Nav} from "react-bootstrap";

@@ -4,19 +4,26 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Components/Firebase';
 import '../Css/SignIn.css'
 import {Button, Container, Row, Col} from "react-bootstrap";
+import loginimg from '../Img/login-book.png'
+import logo2 from "../logo_white.svg";
 
 var e = new Error("Le mot de passe est incorrect ou l'adresse mail n'existe pas.");
 
 const SignInPage = () => (
-    <div>
+    <div className="sign-div">
         <Container>
             <Row>
-                <h1>Bienvenue sur le FALC Assistant!</h1>
+                <img className = "logo" src={logo2}/><text className="logo-text">FALC-Assistant</text>
             </Row>
             <Row>
-                <h2>Se connecter</h2>
+                <Col>
+                    <img className="sign-img" src={loginimg}/>
+                </Col>
+                <Col>
+                    <h2 className="sign-h2">Se connecter</h2>
+                    <div className="signin-formulaire"><SignInForm /></div>
+                </Col>
             </Row>
-            <Row><div className="signin-formulaire"><SignInForm /></div> </Row>
         </Container>
 
 
@@ -36,10 +43,17 @@ class SignInFormBase extends Component {
 
         this.state = { ...INITIAL_STATE };
     }
+    componentDidMount(){
+        document.body.style.backgroundColor = "#3949AB"// Set the style
+        document.body.className="body-component-a" // Or set the class
+    }
+    componentWillUnmount() {
+        document.body.style.backgroundColor = "#FFFFFF"
+    }
 
     onSubmit = event => {
         const { email, password } = this.state;
-        localStorage.setItem('email', email);
+        localStorage.setItem('userConnected', email);
         this.props.firebase
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
@@ -64,9 +78,9 @@ class SignInFormBase extends Component {
         const isInvalid = password === '' || email === '';
 
         return (
-            <form onSubmit={this.onSubmit}
-            className="signin-form">
-                <input
+            <div className="sign-div">
+            <form className="sign-form" onSubmit={this.onSubmit}>
+                <input className="sign-input"
                     name="email"
                     value={email}
                     onChange={this.onChange}
@@ -74,7 +88,7 @@ class SignInFormBase extends Component {
                     placeholder="Adresse email"
                 />
                 <br/>
-                <input
+                <input className="sign-input"
                     name="password"
                     value={password}
                     onChange={this.onChange}
@@ -82,23 +96,20 @@ class SignInFormBase extends Component {
                     placeholder="Mot de passe"
                 />
                 <br/>
-                <Container>
-                    <Row>
+                <button className="sign-button" disabled={isInvalid} type="submit">
+                Se connecter
+                </button>
                 <Link to={"/SignUp"}>
-                            <Button className="btn btn-primary btn-lg"
-                            >S'inscrire
-                            </Button>
+                            <button className="sign-button">
+                            S'inscrire
+                            </button>
                 </Link>
 
-                <Button disabled={isInvalid} type="submit" className="btn btn-primary btn-lg" >
-                    Se connecter
-                </Button>
-                <Link to={"/PasswordForget"}>Mot de passe oublié?</Link>
-                    </Row>
-                </Container>
+                <br/>
+                <Link to={"/PasswordForget"} style={{color: "white"}}>Mot de passe oublié?</Link>
                 {error && <p>{e.message}</p>}
                 </form>
-
+            </div>
         );
     }
 }

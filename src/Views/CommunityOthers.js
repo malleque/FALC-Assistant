@@ -95,7 +95,7 @@ function Community() {
             <Container>
                 <Row>
                     <Col>
-                        <h1>Contacts</h1>
+                        <h1>Documents acceptés</h1>
                     </Col>
                     <Col>
                         <div className="Home-button">

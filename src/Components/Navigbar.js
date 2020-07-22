@@ -16,10 +16,7 @@ class Navigbar extends React.Component{
             </Navbar.Brand>
             <Nav>
                 <li>
-                <Nav.Link href="/Home"><text className="navigbar-text">Accueil</text></Nav.Link>
-                </li>
-                <li>
-                <Nav.Link href="./Files"><text className="navigbar-text">Mes Documents</text></Nav.Link>
+                <Nav.Link href="/Files"><text className="navigbar-text">Documents</text></Nav.Link>
                 </li>
                 <li>
                 <Nav.Link href="/Community"><text className="navigbar-text">Communauté</text></Nav.Link>

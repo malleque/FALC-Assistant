@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import button from "react-bootstrap/Button";
 import {Col, Container, Row, Table, Button, Overlay, Popover, Form, Dropdown, DropdownButton} from "react-bootstrap";
 import '../Css/Home.css';
+import firebase from "firebase";
 const listFiles = [
     {
         id:'1',
@@ -55,8 +56,12 @@ const listFiles = [
 
 ];
 var version = "Version";
-    function Files(){
 
+    function Files(){
+    /*    firebase.database().ref("Files").once('value').then(function(snapshot){
+            var dataFile = (snapshot.val().name);
+            console.log(dataFile);
+        });
             const [show, setShow] = useState(false);
             const [target, setTarget] = useState(null);
             const ref = useRef(null);
@@ -64,50 +69,26 @@ var version = "Version";
             const handleClick = (event) => {
                 setShow(!show);
                 setTarget(event.target);
-            }
+            }*/
+
+
+           // var listItemDB=firebase.database().ref("Files");
+            //listItemDB.orderByChild("Owner").equalTo("Florent").on('value', function(snapshot){
+        //   console.log(snapshot.key)
+        //});
 
             return (
                 <Container fluid>
                     <Row className="justify-content-md-center">
                         <Col sm>
                             <div className="Home-title">
-                                <h2>Documents</h2>
+                                <h1>Documents</h1>
                             </div>
                         </Col>
                         <Col>
-                            <div ref={ref}>
-                                <Button onClick={handleClick}>Nouveau</Button>
-
-                                <Overlay
-                                    show={show}
-                                    target={target}
-                                    placement="bottom"
-                                    container={ref.current}
-                                    containerPadding={50}
-                                >
-                                    <Popover id="popover-contained" md="auto">
-                                        <Popover.Title as="h3">Nouveau document</Popover.Title>
-                                        <Popover.Content>
-                                            <Form>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Nom du document</Form.Label>
-                                                    <Form.Control placeholder="Nom du document" />
-                                                </Form.Group>
-                                                <DropdownButton className ="dropdown-button" id="dropdown-basic-button" title={version}>
-                                                    <Dropdown.Item onClick={version="Texte initial"} href="#/expert">Texte initial</Dropdown.Item>
-                                                    <Dropdown.Item href="#/relecture">Version de travail</Dropdown.Item>
-                                                    <Dropdown.Item href="#/juridique">Version relue</Dropdown.Item>
-                                                    <Dropdown.Item href="#/medical">Version validée</Dropdown.Item>
-                                                </DropdownButton>
-                                                <Button className="popover-button" variant="primary" type="submit">
-                                                    Créer
-                                                </Button>
-                                            </Form>
-
-                                        </Popover.Content>
-                                    </Popover>
-                                </Overlay>
-                            </div>
+                            <Link to={"/NewFile"}>
+                                <Button>Nouveau</Button>
+                            </Link>
                         </Col>
                     </Row>
                     <Row>
@@ -116,7 +97,7 @@ var version = "Version";
                                 <Table responsive>
                                     <thead>
                                     <tr>
-                                        <th>Document</th>
+                                        <th>Titre</th>
                                         <th>Version</th>
                                         <th>Date</th>
                                         <th>Lien</th>
@@ -138,6 +119,10 @@ var version = "Version";
                                             </td>
                                             <td><Link to="/Files" style={{color: "red"}}>
                                                 Supprimer
+                                            </Link>
+                                            </td>
+                                            <td><Link to="/Files">
+                                                Download
                                             </Link>
                                             </td>
                                         </tr>
