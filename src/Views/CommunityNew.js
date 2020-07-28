@@ -1,152 +1,113 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Col, Table, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import button from "react-bootstrap/Button";
-const listPeople = [
-    {
-        id:'1',
-        mail:'praz.florent@gmail.com',
-        lastname: 'Praz',
-        name: 'Florent',
-        role: 'Expert Falc',
-        tarif: '10 chf',
-        document: 'coronavirus',
-        version : 'version de travail 1',
-        modification: '13.07.2020',
-        data: 'Restaurants et bars\n' +
-            'Il est à nouveau possible de se réunir à plus de 4 personnes au restaurant ou dans un bar.\n' +
-            'Mais des règles strictes s’appliquent :\n' +
-            'Une personne du groupe doit indiquer son nom et son adresse.\n' +
-            'Il faut s’asseoir à une table pour boire ou manger.\n' +
-            'Sauf dans les discothèques, les night-clubs et les salles de danse.\n' +
-            'On peut à nouveau jouer au billard ou aux fléchettes.\n' +
-            'Écouter de la musique live est à nouveau possible.\n' +
-            'Les horaires d’ouverture sont limités.\n' +
-            'Rassemblements et manifestations\n' +
-            'Les réunions de plus de 5 personnes sont à nouveau possibles.\n' +
-            'Sont autorisés :\n' +
-            'Les camps de vacances pour enfants et jeunes jusqu’à 300 participants au maximum\n' +
-            'Les services religieux et fêtes religieuses\n' +
-            'La récolte de signatures dans l’espace public\n' +
-            'Les manifestations politiques jusqu’à 300 personnes au maximum\n' +
-            'Mais il doit y avoir un plan de protection.\n' +
-            'Une personne doit être responsable du plan de protection.\n' +
-            'Les manifestations jusqu’à 300 personnes au maximum'
-    },
-    {
-        id:'2',
-        mail: 'dayer.arnaud@gmail.com',
-        lastname: 'Dayer',
-        name: 'Arnaud',
-        role: 'Groupe de relecture',
-        tarif: '20 chf',
-        document: 'coronavirus',
-        version: 'version de travail 1',
-        modification: '13.07.2020',
-        data:
-            'Restaurants et bars\n' +
-            'Il est à nouveau possible de se réunir à plus de 4 personnes au restaurant ou dans un bar.\n' +
-            'Mais des règles strictes s’appliquent :\n' +
-            'Une personne du groupe doit indiquer son nom et son adresse.\n' +
-            'Il faut s’asseoir à une table pour boire ou manger.\n' +
-            'Sauf dans les discothèques, les night-clubs et les salles de danse.\n' +
-            'On peut à nouveau jouer au billard ou aux fléchettes.\n' +
-            'Écouter de la musique live est à nouveau possible.\n' +
-            'Les horaires d’ouverture sont limités.\n' +
-            'Rassemblements et manifestations\n' +
-            'Les réunions de plus de 5 personnes sont à nouveau possibles.\n' +
-            'Sont autorisés :\n' +
-            'Les camps de vacances pour enfants et jeunes jusqu’à 300 participants au maximum\n' +
-            'Les services religieux et fêtes religieuses\n' +
-            'La récolte de signatures dans l’espace public\n' +
-            'Les manifestations politiques jusqu’à 300 personnes au maximum\n' +
-            'Mais il doit y avoir un plan de protection.\n' +
-            'Une personne doit être responsable du plan de protection.\n' +
-            'Les manifestations jusqu’à 300 personnes au maximum'
-    },
-    {
-        id:'3',
-        mail:'clerc.isaac@gmail.com',
-        lastname: 'Clerc',
-        name: 'Isaac',
-        role: 'Expert juridique',
-        tarif: '10 chf',
-        document: 'réunion',
-        version : 'texte initial',
-        modification: '15.07.2020',
-        data: 'test'
-    },
-    {
-        id:'4',
-        mail:'dettwiler.yann@gmail.com',
-        lastname: 'Dettwiler',
-        name: 'Yann',
-        role: 'Expert médical',
-        tarif: '40 chf',
-        document: 'réunion',
-        version : 'texte initial',
-        modification: '15.07.2020',
-        data: 'test'
-    },
-]
-function Community() {
-    return (
-        <div>
-            <Container>
-                <Row>
-                    <Col xs={10}>
-                        <h1>Documents en attente d'acceptation</h1>
-                    </Col>
-                    <Col>
-                        <div className="Home-button">
-                            <Link to={"/CommunityO"}>
-                            <button type="button"
-                                    className="btn btn-primary btn-lg" type="submit"
-                            >Retour
-                            </button>
-                            </Link>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-            <Table responsive>
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Document</th>
-                    <th>Commentaire</th>
-                </tr>
-                </thead>
-                <tbody>
-                {listPeople.map(item=>(
-                    <tr key={item.id}>
-                        <td>{item.lastname}</td>
-                        <td>{item.name}</td>
-                        <td>{item.document}</td>
-                        <td>
-                            <Link to="/Community"
-                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                Commentaire
-                            </Link>
-                        </td>
-                        <td>
-                            <Link to="/Community"
-                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                Accepter
-                            </Link>
-                        </td>
-                        <td>
-                            <Link to="/Community" style={{color: "red"}}
-                                  onClick={() =>(localStorage.setItem("personContact", item.id))}>
-                                Refuser
-                            </Link>
-                        </td>
+import firebase from 'firebase';
+import moment from "moment";
+
+var messages;
+function acceptContact(){
+    firebase.database().ref('contact/' + localStorage.getItem("idContact").toString()).update({
+        status: "accepté",
+        date : moment().format("DD-MM-YYYY hh:mm:ss")
+    });
+}
+function refuseContact(){
+    firebase.database().ref('contact/'+localStorage.getItem("idContact").toString()).update({
+        status: "refusé",
+        date : moment().format("DD-MM-YYYY hh:mm:ss")
+    });
+}
+class Community extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arr: [],
+        }
+        //take the contact between users and other people
+        firebase.database().ref('contact').on('value', data => {
+            console.log(data.val());
+            messages = data.toJSON();
+            const arrMessage = [];
+            var idMessage=[];
+            if(messages===null){return(null)}
+            Object.keys(messages).forEach(function (key) {
+                console.log(messages);
+                if (messages[key].receiver === localStorage.getItem("userConnected") && messages[key].status==="en attente") {
+                    arrMessage.push({name: key, value: messages[key]});
+                }
+                console.log(arrMessage);
+
+            });
+
+            this.setState({arr: arrMessage});
+        });
+    }
+    render() {
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+        var arrMessage = this.state.arr;
+        return (
+            <div>
+                <Container>
+                    <Row>
+                        <Col xs={10}>
+                            <h1>Documents en attente d'acceptation</h1>
+                        </Col>
+                        <Col>
+                            <div className="Home-button">
+                                <Link to={"/CommunityO"}>
+                                    <button type="button"
+                                            className="btn btn-primary btn-lg" type="submit"
+                                    >Retour
+                                    </button>
+                                </Link>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+                <Table responsive>
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Document</th>
+                        <th>Commentaire</th>
                     </tr>
-                ))}
-                </tbody>
-            </Table>
-        </div>
-    );
+                    </thead>
+                    <tbody>
+                    {arrMessage.map(item => (
+                        <tr key={item.value.date}>
+                            {console.log(localStorage.getItem("idContact"))}
+                            <td>{item.value.sender}</td>
+                            <td>{item.value.title}</td>
+                            <td>{item.value.message}</td>
+                            <td>
+                                <Link to="/Community"
+                                      onClick={() => (localStorage.setItem("personContact", item.id))}>
+                                    Commentaire
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to="/CommunityO"
+                                      onClick={() => (localStorage.setItem("idContact", item.name),acceptContact())}>
+                                    Accepter
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to="/CommunityO" style={{color: "red"}}
+                                      onClick={() => (localStorage.setItem("idContact", item.name),refuseContact())}>
+                                    Refuser
+                                </Link>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </Table>
+            </div>
+        );
+    };
 }
 export default Community

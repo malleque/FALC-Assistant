@@ -30,6 +30,7 @@ const SignUpPage = () => (
 );
 
 const INITIAL_STATE = {
+    username:'',
     name: '',
     lastname: '',
     email: '',
@@ -53,11 +54,12 @@ class SignUpFormBase extends Component {
         document.body.style.backgroundColor = "#FFFFFF"
     }
     onSubmit = event => {
-        const { name, lastname, email, tarif, passwordOne } = this.state;
+        const { username, name, lastname, email, tarif, passwordOne } = this.state;
 
         firebase.database().ref('users').push(
             {
                 name: name,
+                username: username,
                 lastname: lastname,
                 email: email,
                 role: roleg,
@@ -93,6 +95,7 @@ class SignUpFormBase extends Component {
 
     render() {
         const {
+            username,
             name,
             lastname,
             email,
@@ -107,6 +110,7 @@ class SignUpFormBase extends Component {
             passwordOne === '' ||
             tarif === '' ||
             email === '' ||
+            username === '' ||
             lastname === '' ||
             name === '';
         const tarifInvalid =
@@ -114,6 +118,14 @@ class SignUpFormBase extends Component {
             roleg === '';
         return(
             <form onSubmit={this.onSubmit}>
+                <input className="sign-input"
+                       name="username"
+                       value={username}
+                       onChange={this.onChange}
+                       type="text"
+                       placeholder="Nom d'utilisateur"
+                />
+                <br/>
                 <input className="sign-input"
                     name="name"
                     value={name}

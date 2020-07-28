@@ -5,8 +5,9 @@ import '../Css/Home.css';
 import button from "react-bootstrap/Button";
 import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb} from "react-bootstrap";
 import firebase from 'firebase';
+import moment from "moment";
 
-const listFiles = [
+/*const listFiles = [
     {
         id: '1',
         document: 'coronavirus',
@@ -70,11 +71,33 @@ let tmpFile;
             tmpFile = item;
         }
     }
-)};
+)};*/
 var dataTest="";
+var files;
 class Layout extends Component {
-    state = {
+    constructor(){
+        super();
+
+    this.state = {
+        arrFile: [],
         data: ""
+    }
+    //take the file from the database
+    console.log(localStorage.getItem("documentTitle"));
+    firebase.database().ref().child('files/'+localStorage.getItem("username")).on('value', data => {
+    console.log(data.val());
+    files = data.toJSON();
+    const arrFile=[];
+    Object.keys(files).forEach(function (item) {
+        console.log(files[item]);
+        if (files[item].title === localStorage.getItem("documentTitle")) arrFile.push(files[item]);
+        var sorted_files = arrFile.sort((a,b) => {
+            return new Date(a.date).getTime() -
+                new Date(b.date).getTime()
+        }).reverse();
+    });
+        this.setState ({arrFile: arrFile});
+});
     }
     handleData = e => {
         this.setState({
@@ -82,24 +105,38 @@ class Layout extends Component {
         })
     }
     handleSubmit=e =>{
-        let texteRef = firebase.database().ref('test').orderByKey().limitToLast(1000);
-        firebase.database().ref('test').push(
+        firebase.database().ref('files/'+localStorage.getItem("username")).push(
             {
-                data: this.state.data
+                title: localStorage.getItem("documentTitle"),
+                version: "version mise en page",
+                date : moment().format("DD-MM-YYYY hh:mm:ss"),
+                data : this.state.data
             }
         );
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
         this.setState({
             text: ""
         })
     }
     render() {
+        var arrFile= [];
+        this.state.arrFile.forEach(item=>{
+            if(!arrFile.some(i => i.title === item.title)){
+                arrFile.push({...item})
+            }
+        });
         return (
             <div>
-                <Container>
+                    {arrFile.map(item => (
+                        <td key={item.title}>
+                <Container fluid>
                     <Row className="justify-content-md-center">
                         <Col sm>
                             <div className="Home-title">
-                                <h1>{tmpFile.document}</h1>
+                                <h1>{item.title}</h1>
                             </div>
                         </Col>
                         <Col sm>
@@ -122,13 +159,13 @@ class Layout extends Component {
                     <Row className="justify-content-md-center">
                         <Col sm>
                             <div className="Home-title">
-                                <h3>{tmpFile.version}</h3>
+                                <h3>{item.version}</h3>
                             </div>
                         </Col>
                     </Row>
 
                     <Row className="justify-content-md-center">
-                        <Col sm key={localStorage.getItem("documentTitle")}>
+                        <Col sm>
                             <CKEditor
                                 editor={DecoupledEditor}
                                 onInit={editor => {
@@ -146,7 +183,7 @@ class Layout extends Component {
                                     console.log({event, editor, dataTest});
                                 }}
                                 editor={DecoupledEditor}
-                                data={tmpFile.data}
+                                data={item.data}
                                 config={DecoupledEditor}
                             />
                         </Col>
@@ -154,7 +191,7 @@ class Layout extends Component {
                     </Row>
 
                 </Container>
-
+                        </td>))}
             </div>
         );
     };

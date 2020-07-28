@@ -1,11 +1,12 @@
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import React from "react";
+import React, {Component} from "react";
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
 import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {map} from "react-bootstrap/ElementChildren";
+import firebase from 'firebase';
 const listFiles = [
     {
         id: '1',
@@ -104,14 +105,30 @@ let juridique = listPeople.filter(function (people){
 let medical = listPeople.filter(function (people){
     return people.role === "Expert médical"
 })
-let tmpFile;
-{listFiles.map((item) => {
-        if (item.id == localStorage.getItem("documentTitle")) {
-            tmpFile = item;
+var contacts;
+
+class FindPeople extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arrContact: [],
         }
+        firebase.database().ref().child('users').on('value', data =>{
+            console.log(data.val());
+            contacts = data.toJSON();
+            const arrContact = [];
+            Object.keys(contacts).forEach(function(item){
+                console.log(localStorage.getItem("userConnected"));
+                console.log(contacts[item]);
+                if(contacts[item].email!=localStorage.getItem("userConnected")) arrContact.push(contacts[item]);
+            });
+            this.setState({arrContact: arrContact})
+        });
     }
-)};
-function FindPeople() {
+
+    render(){
+        var arr=this.state.arrContact;
+        console.log(arr);
     return (
         <Container>
             <Row className="justify-content-md-center">
@@ -146,7 +163,7 @@ function FindPeople() {
             </Row>
             <Row>
                 <Col>
-                    <h2>{tmpFile.version}</h2>
+                    <h2>titre document</h2>
                 </Col>
             </Row>
             <Row>
@@ -161,15 +178,15 @@ function FindPeople() {
                     </tr>
                     </thead>
                     <tbody>
-                    {choice.map(item=>(
-                        <tr key={item.id}>
+                   {arr.map(item=>(
+                        <tr key={item.email}>
                             <td>{item.lastname}</td>
                             <td>{item.name}</td>
-                            <td>{item.tarif}</td>
                             <td>{item.role}</td>
+                            <td>{item.tarif} chf/h</td>
                             <td>
                                 <Link to="/ContactForm"
-                                      onClick={() =>(localStorage.setItem("personContact", item.id))}>
+                                      onClick={() =>(localStorage.setItem("personContact", item.email))}>
                                     contacter
                                 </Link>
                             </td>
@@ -181,5 +198,6 @@ function FindPeople() {
             </Row>
         </Container>
     )
-};
+    }
+}
 export default FindPeople;

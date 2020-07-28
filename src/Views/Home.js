@@ -2,20 +2,49 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {Container, Row, Col, DropdownButton, Dropdown, button} from 'react-bootstrap';
 import '../Css/Home.css';
-import firebase from "../Components/Firebase";
+import firebase from "firebase";
 var policeU= "Arial";
 var tailleU= "12";
 const INITIAL_STATE = {
     police: '',
     taille: '',
 };
-
+var userD;
+var username;
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {...INITIAL_STATE};
+        //Récupération du username par la db via l'email
+        firebase.database().ref().child('users').on('value', data =>{
+            console.log(data.val());
+            userD=data.toJSON();
+            const users = [];
+            const role=[];
+            Object.keys(userD).forEach(function(item){
+                console.log(localStorage.getItem("userConnected"));
+                console.log(userD[item]);
+                if(userD[item].email===localStorage.getItem("userConnected")){
+                    users.push(userD[item].username);
+                    role.push(userD[item].role);
+                    localStorage.setItem("username", users);
+                    localStorage.setItem("role", role);
+                    if(!window.location.hash) {
+                        window.location = window.location + '#loaded';
+                        window.location.reload();
+                    }
+                }
+            });
 
+        });
+        console.log(localStorage.getItem("role"));
+
+        /*ref.orderByChild("email").equalTo(localStorage.getItem("userConnected")).on('value', data =>{
+            console.log(data.val());
+            const user = data.toJSON();
+            console.log(user);
+        });*/
     }
 
     onSubmit = event => {
@@ -31,8 +60,9 @@ class Home extends Component {
         }).catch((error) => {
             console.log('INSERTED!')
         });    }
-        render()
-        {
+
+        render() {
+
             const {
                 police,
                 taille,
