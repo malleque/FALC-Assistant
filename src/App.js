@@ -14,9 +14,11 @@ import Layout from './Views/Layout';
 import ContactForm from "./Views/ContactForm";
 import FindPeople from './Views/FindPeople';
 import CommunityNew from './Views/CommunityNew';
+import CommunityFile from "./Views/CommunityFile";
 import CommunityOthers from './Views/CommunityOthers';
 import {withAuthentication} from './Components/Session';
 import PasswordForget from './Components/PasswordForget';
+import Chat from './Views/Chat';
 import NewFile from './Views/NewFile';
 import firebase from 'firebase';
 
@@ -87,7 +89,9 @@ class App extends Component {
                                         <Route path="/ContactForm" component ={ContactForm}/>
                                         <Route path="/CommunityO" component ={CommunityOthers}/>
                                         <Route path="/CommunityNew" component ={CommunityNew}/>
+                                        <Route path="/CommunityFile" component ={CommunityFile}/>
                                         <Route path="/NewFile" component ={NewFile}/>
+                                        <Route path="/Chat" component ={Chat}/>
 
                                     </Switch>
                                 </div>

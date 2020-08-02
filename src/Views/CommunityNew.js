@@ -71,9 +71,9 @@ class Community extends Component {
                 <Table responsive>
                     <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
+                        <th>Personne</th>
                         <th>Document</th>
+                        <th>Commentaire</th>
                         <th>Commentaire</th>
                     </tr>
                     </thead>

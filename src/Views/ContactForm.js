@@ -41,7 +41,8 @@ var idPush;
                     sender: localStorage.getItem("userConnected"),
                     receiver: localStorage.getItem("personContact"),
                     status: "en attente",
-                    date : moment().format("DD-MM-YYYY hh:mm:ss")
+                    date : moment().format("DD-MM-YYYY hh:mm:ss"),
+                    username: localStorage.getItem("username")
                 });
             this.setState({
                 text: ""
@@ -87,7 +88,7 @@ var idPush;
                             </Form.Group>
                         </Form>
                     </div>
-                    <Link to={"/Files"}>
+                    <Link to={"/Community"}>
                         <Button onClick={this.handleSubmit} variant="primary" size="lg"
                         >Contacter
                         </Button>

@@ -153,12 +153,22 @@ class FindPeople extends Component {
             </Row>
             <Row>
                 <Col>
-                <Breadcrumb>
-                    <Breadcrumb.Item href="/File">Transcription</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/Layout">Mise en page</Breadcrumb.Item>
-                    <Breadcrumb.Item active>Trouver un contact</Breadcrumb.Item>
-
-                </Breadcrumb>
+                    <div id="breadcrumbNav2">
+                        <div id="arrowBar2">
+                            <a> <span className="AB2rotate color0"><span
+                                className="AB2rotateReset"><span
+                                className="AB2text0">Etapes</span></span></span></a>
+                            <a href="/File"> <span className="AB2rotate color1 AB1rotate"><span
+                                className="AB2rotateReset"><span
+                                className="AB2text1">Transcription</span></span></span></a>
+                            <a href="/Layout"> <span className="AB2rotate color2"><span
+                                className="AB2rotateReset"><span
+                                className="AB2text2">Mise en page</span></span></span></a>
+                            <a > <span className="AB2rotate active3 AB1rotate"><span
+                                className="AB2rotateReset"><span
+                                className="AB2text3">Relecture</span></span></span></a>
+                        </div>
+                    </div>
                 </Col>
             </Row>
             <Row>

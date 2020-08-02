@@ -89,7 +89,6 @@ var files;
                                         <th>Titre</th>
                                         <th>Version</th>
                                         <th>Date</th>
-                                        <th>Lien</th>
                                         <th/>
                                     </tr>
                                     </thead>
@@ -97,21 +96,11 @@ var files;
 
                                     {filterArray.map(item => (
                                         <tr key={item.modification}>
-                                            <td>{item.value.title}</td>
-                                            <td>{item.value.version}</td>
-                                            <td>{item.value.date}</td>
-                                            <td>
-                                                <Link to="/File"
-                                                      onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version))}>
-                                                    {item.value.title}
-                                                </Link>
-                                            </td>
-                                            <td><Link onClick={()=>(deleteFile(item.value.title))} >
+                                            <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.title}</td>
+                                            <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.version}</td>
+                                            <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.date}</td>
+                                            <td><Link to="/Files" onClick={()=>(deleteFile(item.value.title))} style={{color:"red"}} >
                                                 Supprimer
-                                            </Link>
-                                            </td>
-                                            <td><Link to="/Files">
-                                                Download
                                             </Link>
                                             </td>
                                         </tr>

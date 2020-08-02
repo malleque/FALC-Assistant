@@ -10,7 +10,7 @@ import moment from "moment";
 /*const listFiles = [
     {
         id: '1',
-        document: 'coronavirus',
+        document: 'coronavirus',ma
         version: 'texte initial',
         modification: '13.07.2020',
         data: 'Ouverts ou autorisés depuis le 6 juin\n' +
@@ -72,8 +72,22 @@ let tmpFile;
         }
     }
 )};*/
+var count=1;
 var dataTest="";
 var files;
+function findVersionNumber(arr) {
+    if (arr.length != 0) {
+        console.log(arr);
+        for (var i = 0; i <= arr.length - 1; i++) {
+            console.log(arr[i].title)
+            if (arr[i].version.includes("page")) {
+                if (count <= arr[i].numberV)
+                    count = arr[i].numberV + 1;
+            }
+        }
+
+    }
+}
 class Layout extends Component {
     constructor(){
         super();
@@ -108,9 +122,10 @@ class Layout extends Component {
         firebase.database().ref('files/'+localStorage.getItem("username")).push(
             {
                 title: localStorage.getItem("documentTitle"),
-                version: "version mise en page",
+                version: "version mise en page "+count,
                 date : moment().format("DD-MM-YYYY hh:mm:ss"),
-                data : this.state.data
+                data : this.state.data,
+                numberV : count,
             }
         );
         if(!window.location.hash) {
@@ -128,6 +143,7 @@ class Layout extends Component {
                 arrFile.push({...item})
             }
         });
+        findVersionNumber(this.state.arrFile);
         return (
             <div>
                     {arrFile.map(item => (
@@ -149,12 +165,22 @@ class Layout extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Breadcrumb>
-                            <Breadcrumb.Item href="/File">Transcription</Breadcrumb.Item>
-                            <Breadcrumb.Item active>Mise en page</Breadcrumb.Item>
-                            <Breadcrumb.Item href="/FindPeople">Trouver un contact</Breadcrumb.Item>
-
-                        </Breadcrumb>
+                        <div id="breadcrumbNav2">
+                            <div id="arrowBar2">
+                                        <a> <span className="AB2rotate color0"><span
+                                            className="AB2rotateReset"><span
+                                            className="AB2text0">Etapes</span></span></span></a>
+                                        <a href="/File"> <span className="AB2rotate color1 AB1rotate"><span
+                                            className="AB2rotateReset"><span
+                                            className="AB2text1">Transcription</span></span></span></a>
+                                        <a> <span className="AB2rotate active2"><span
+                                            className="AB2rotateReset"><span
+                                            className="AB2text2">Mise en page</span></span></span></a>
+                                        <a href="/FindPeople"> <span className="AB2rotate color3 AB1rotate"><span
+                                            className="AB2rotateReset"><span
+                                            className="AB2text3">Relecture</span></span></span></a>
+                            </div>
+                        </div>
                     </Row>
                     <Row className="justify-content-md-center">
                         <Col sm>

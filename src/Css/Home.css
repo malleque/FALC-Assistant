@@ -61,9 +61,10 @@ h2{
 .text{
     display: inline-block;
     text-align: left;
-    margin-top: 5%;
+    margin-top: 2%;
     width: 100%;
-    font-family: "Times New Roman";
+    font-family: "Trebuchet MS";
+    font-size: 25px;
 }
 
 .Home-link {
@@ -167,3 +168,157 @@ button{
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+body{margin-top: 25px;}
+
+
+.color0arrowTail{
+    z-index: 60;
+    background-color: white;
+    border: 1px solid black;
+    margin-left: -217px;
+}
+
+.color1{
+    z-index: 50;
+    background-color: DodgerBlue;
+    border: 1px solid black;
+    margin-left: 0px;
+}
+.color2{
+    z-index: 40;
+    background-color: purple;
+    border: 1px solid black;
+    margin-left:0px;
+}
+.color3{
+    z-index: 30;
+    background-color: DarkGreen;
+    border: 1px solid black;
+    margin-left: 0px;
+}
+
+
+#results2{
+    margin-left: 350px;
+}
+#breadcrumbNav2{
+    margin-top: 0px;
+    margin-left: 5%;
+}
+#arrowBar2{
+    display: inline-block;
+    overflow: hidden;
+    width: 1000px;
+    height: 50px;
+}
+.color0{
+    z-index: 60;
+    background-color: orange;
+    border: 1px solid black;
+    margin-left: 0px;
+}
+.color6{
+    background-color: teal;
+    margin-left: -100px;
+}
+
+.AB2rotate {
+    position: relative;
+    display: inline-block;
+    top: -75px;
+    width: 200px;
+    height: 200px;
+
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+.AB2rotateReset {
+    display: inline-block;
+
+
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.AB2text0{
+    position: relative;
+    top: 50px;
+    left:-50px;
+    color: white;
+}
+.AB2text1{
+    position: relative;
+    top: 50px;
+    left:-20px;
+    color: white;
+}
+.AB2text2{
+    position: relative;
+    top: 50px;
+    left: -20px;
+    color: white;
+}
+.AB2text3{
+    position: relative;
+    top: 50px;
+    left: -20px;
+    color: white;
+}
+
+.AB1rotate:hover{
+    background-color: black;
+    color: black;
+}
+
+.active1{
+    z-index: 50;
+    background-color: grey;
+    border: 1px solid black;
+    margin-left: 0px;
+}
+.active2{
+    z-index: 40;
+    background-color: grey;
+    border: 1px solid black;
+    margin-left:0px;
+}
+.active3{
+    z-index: 30;
+    background-color: DarkGreen;
+    border: 1px solid black;
+    margin-left: 0px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    z-index: 2;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    padding: 8px 12px;
+}
+
+li:hover {
+    background-color: rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+}

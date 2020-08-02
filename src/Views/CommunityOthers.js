@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Col, Table, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import button from "react-bootstrap/Button";
+import {OverlayTrigger, Popover, Button} from "react-bootstrap";
+import firebase from "firebase";
 const listPeople = [
     {
         id:'1',
@@ -89,52 +90,127 @@ const listPeople = [
         data: 'test'
     },
 ]
-function Community() {
-    return (
-        <div>
-            <Container>
-                <Row>
-                    <Col>
-                        <h1>Documents acceptés</h1>
-                    </Col>
-                    <Col>
-                        <div className="Home-button">
-                            <Link to={"/CommunityNew"}>
-                            <button type="button"
-                                    className="btn btn-primary btn-lg" type="submit"
-                            >Nouvelles demandes
-                            </button>
-                            </Link>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
-            <Table responsive>
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Document</th>
-                </tr>
-                </thead>
-                <tbody>
-                {listPeople.map(item=>(
-                    <tr key={item.id}>
-                        <td>{item.lastname}</td>
-                        <td>{item.name}</td>
-                        <td>
-                            <Link to="/File"
-                                  onClick={() =>(localStorage.setItem("documentTitle", item.id))}>
-                                {item.document}
-                            </Link>
-                        </td>
+var messages;
+var senders;
+class CommunityOthers extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arr: [],
+            arrSender:[],
+        }
+        //take the contact between users and other people
+        firebase.database().ref().child('contact').on('value', data => {
+            console.log(data.val());
+            messages = data.toJSON();
+            const arrMessage = [];
+            if (messages === null) {
+                return (null)
+            }
+            Object.keys(messages).forEach(function (key) {
+                console.log(messages[key]);
+                if (messages[key].receiver === localStorage.getItem("userConnected") && messages[key].status === "accepté") arrMessage.push({
+                    name: key,
+                    value: messages[key]
+                });
+            });
+            this.setState({arr: arrMessage});
+            console.log(arrMessage);
+        });
+        /*//take the data of the sender
+        firebase.database().ref().child('users').on('value', data =>{
+            console.log(data.val());
+            senders=data.toJSON();
+            const sender = [];
+            Object.keys(senders).forEach(function(item){
+                console.log(localStorage.getItem("userConnected"));
+                console.log(senders[item]);
+                if(senders[item].email===arrMessage.value.sender){
+                    sender.push(senders[item]);
+                }
+            });
+        this.setState({arrSender: sender});
+        console.log(sender);
+        });*/
 
-                    </tr>
-                ))}
+    }
 
-                </tbody>
-            </Table>
-        </div>
-    );
+    render() {
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+        var arrMessage = this.state.arr;
+        console.log(arrMessage);
+        {
+            return (
+                <div>
+                    <Container>
+                        <Row>
+                            <Col>
+                                <h1>Documents acceptés</h1>
+                            </Col>
+                            <Col>
+                                <div className="Home-button">
+                                    <Link to={"/CommunityNew"}>
+                                        <button type="button"
+                                                className="btn btn-primary btn-lg" type="submit"
+                                        >Nouvelles demandes
+                                        </button>
+                                    </Link>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                    <Table responsive>
+                        <thead>
+                        <tr>
+                            <th>Personne</th>
+                            <th>message</th>
+                            <th>Document</th>
+                            <th>Modifié le ...</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {arrMessage.map(item => (
+                            <tr key={item.value.date}>
+                                <td>{item.value.sender}</td>
+                                <td>
+                                    <OverlayTrigger
+                                        trigger="click"
+                                        key={'top'}
+                                        placement={'top'}
+                                        overlay={
+                                            <Popover id={`popover-positioned-top`}>
+                                                <Popover.Title as="h3">{`Message:`}</Popover.Title>
+                                                <Popover.Content>
+                                                    {item.value.message}
+                                                </Popover.Content>
+                                            </Popover>
+                                        }
+                                    >
+                                        <Button variant="primary">Message</Button>
+                                    </OverlayTrigger>
+                              </td>
+                                <td>
+                                    <Link to="/CommunityFile"
+                                          onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentName", item.value.title), localStorage.setItem("idMessage", item.name))}>
+                                        {item.value.title}
+                                    </Link>
+                                </td>
+                                <td>{item.value.date}</td>
+                                <td><Link to="/Chat" onClick={()=>(localStorage.setItem("receiver", item.value.sender))} style={{color:"green"}} >
+                                    Chat
+                                </Link>
+                                </td>
+                            </tr>
+                        ))}
+
+                        </tbody>
+                    </Table>
+                </div>
+            );
+        }
+    };
 }
-export default Community
+export default CommunityOthers;

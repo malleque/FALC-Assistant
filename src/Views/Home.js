@@ -8,29 +8,30 @@ var tailleU= "12";
 const INITIAL_STATE = {
     police: '',
     taille: '',
+    texte:[],
 };
 var userD;
-var username;
+var text;
 class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {...INITIAL_STATE};
         //Récupération du username par la db via l'email
-        firebase.database().ref().child('users').on('value', data =>{
+        firebase.database().ref().child('users').on('value', data => {
             console.log(data.val());
-            userD=data.toJSON();
+            userD = data.toJSON();
             const users = [];
-            const role=[];
-            Object.keys(userD).forEach(function(item){
+            const role = [];
+            Object.keys(userD).forEach(function (item) {
                 console.log(localStorage.getItem("userConnected"));
                 console.log(userD[item]);
-                if(userD[item].email===localStorage.getItem("userConnected")){
+                if (userD[item].email === localStorage.getItem("userConnected")) {
                     users.push(userD[item].username);
                     role.push(userD[item].role);
                     localStorage.setItem("username", users);
                     localStorage.setItem("role", role);
-                    if(!window.location.hash) {
+                    if (!window.location.hash) {
                         window.location = window.location + '#loaded';
                         window.location.reload();
                     }
@@ -38,36 +39,27 @@ class Home extends Component {
             });
 
         });
-        console.log(localStorage.getItem("role"));
-
-        /*ref.orderByChild("email").equalTo(localStorage.getItem("userConnected")).on('value', data =>{
+        //Récupération du texte de la page d'accueil
+        firebase.database().ref('accueil').on('value', data => {
             console.log(data.val());
-            const user = data.toJSON();
-            console.log(user);
-        });*/
+            text = data.toJSON();
+            var arrText = [];
+            console.log(text)
+            Object.keys(text).forEach(key => arrText.push({name: key, value: text[key]}))
+            this.setState({texte: arrText});
+            console.log(arrText);
+        });
+
+
     }
-
-    onSubmit = event => {
-        const {police, taille} = this.state;
-
-        firebase.database().ref('settingsU').push(
-            {
-                police: policeU,
-                taille: tailleU
-            }
-        ).then(() => {
-            console.log('INSERTED!')
-        }).catch((error) => {
-            console.log('INSERTED!')
-        });    }
-
         render() {
 
             const {
                 police,
                 taille,
             } = this.state;
-
+            var text = this.state.texte;
+            console.log(text);
             return (
                 <Container>
                     <Row className="justify-content-md-center">
@@ -77,7 +69,7 @@ class Home extends Component {
                                 <h1>Accueil</h1>
                             </div>
                         </Col>
-                        <Col sm>
+                        {/*<Col sm>
                             <div className="dropdown">
                                 <button className="dropbtn" value={police} onChange={this.onChange}>{policeU}</button>
                                 <div className="dropdown-content">
@@ -98,15 +90,24 @@ class Home extends Component {
 
                                 </div>
                             </div>
-                        </Col>
+                        </Col>*/}
                     </Row>
+                    {text.map(item=>(
+                        <td key = {item.name}>
+
                     <Row class="mb-5">
-                        <p>
-                            Le falc assistant est une aide pour l'écriture en falc. <br/>
-                            Vous trouverez sur ce site : <br/>
-                            1) une page avec vos différents documents<br/>
-                            2) une page de modification avec les erreurs des textes.<br/>
-                            3)une page communautaire pour la relecture
+
+                        <p className="text">
+                             Le falc assistant est une aide pour l'écriture en falc. <br/>
+                                Vous trouverez sur ce site : <br/>
+                                1) une section Documents qui permet de :<br/>
+                                &emsp;&emsp;A) Transcrire votre document avec une assistance<br/>
+                                &emsp;&emsp;B) Faire la mise en page de votre document<br/>
+                                &emsp;&emsp;C) Trouver un contact<br/>
+                                2) une section Communauté qui permet de : <br/>
+                                &emsp;&emsp;A) Consulter les documents que l'on a partagé avec quelqu'un <br/>
+                                &emsp;&emsp;B) Envoyer des messages à votre relecteur <br/>
+                                3) Des paramètres pour choisir les règles que vous souhaitez utiliser
                         </p>
                     </Row>
 
@@ -120,6 +121,8 @@ class Home extends Component {
                         </p>
 
                     </Row>
+                        </td>
+                        ))}
                 </Container>
 
             );
