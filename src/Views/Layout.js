@@ -148,23 +148,17 @@ class Layout extends Component {
             <div>
                     {arrFile.map(item => (
                         <td key={item.title}>
-                <Container fluid>
-                    <Row className="justify-content-md-center">
-                        <Col sm>
-                            <div className="Home-title">
+
+                            <div className="split left">
                                 <h1>{item.title}</h1>
                             </div>
-                        </Col>
-                        <Col sm>
-                            <div className="Home-button">
+
+                            <div className="split right">
                                 <button  onClick={this.handleSubmit} type="button"
-                                        className="btn btn-primary btn-lg" type="submit"
+                                        className="button" type="submit"
                                 >Sauvegarder
                                 </button>
                             </div>
-                        </Col>
-                    </Row>
-                    <Row>
                         <div id="breadcrumbNav2">
                             <div id="arrowBar2">
                                         <a> <span className="AB2rotate color0"><span
@@ -175,23 +169,17 @@ class Layout extends Component {
                                             className="AB2text1">Transcription</span></span></span></a>
                                         <a> <span className="AB2rotate active2"><span
                                             className="AB2rotateReset"><span
-                                            className="AB2text2">Mise en page</span></span></span></a>
+                                            className="AB2textActive">Mise en page</span></span></span></a>
                                         <a href="/FindPeople"> <span className="AB2rotate color3 AB1rotate"><span
                                             className="AB2rotateReset"><span
                                             className="AB2text3">Relecture</span></span></span></a>
                             </div>
                         </div>
-                    </Row>
-                    <Row className="justify-content-md-center">
-                        <Col sm>
-                            <div className="Home-title">
+
+                            <div className="splitM">
                                 <h3>{item.version}</h3>
                             </div>
-                        </Col>
-                    </Row>
-
-                    <Row className="justify-content-md-center">
-                        <Col sm>
+                        <div className="splitD">
                             <CKEditor
                                 editor={DecoupledEditor}
                                 onInit={editor => {
@@ -212,11 +200,7 @@ class Layout extends Component {
                                 data={item.data}
                                 config={DecoupledEditor}
                             />
-                        </Col>
-
-                    </Row>
-
-                </Container>
+                        </div>
                         </td>))}
             </div>
         );

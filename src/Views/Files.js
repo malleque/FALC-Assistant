@@ -76,7 +76,7 @@ var files;
                         </Col>
                         <Col>
                             <Link to={"/NewFile"}>
-                                <Button>Nouveau</Button>
+                                <button className="button">Nouveau</button>
                             </Link>
                         </Col>
                     </Row>
@@ -96,7 +96,7 @@ var files;
 
                                     {filterArray.map(item => (
                                         <tr key={item.modification}>
-                                            <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.title}</td>
+                                            <td style={{color:"blue"}} onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.title}</td>
                                             <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.version}</td>
                                             <td onClick={() => (localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("documentVersion",item.value.version), window.location = '/File')}>{item.value.date}</td>
                                             <td><Link to="/Files" onClick={()=>(deleteFile(item.value.title))} style={{color:"red"}} >

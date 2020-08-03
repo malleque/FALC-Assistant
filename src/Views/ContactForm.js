@@ -60,9 +60,7 @@ var idPush;
                     {arrContact.map(item => (
                         <td key={item.title}>
                     <Row>
-                        <Col className="contactform-title">
                             <h1>Formulaire de contact</h1>
-                        </Col>
                     </Row>
                     <div className="contactform-div">
                         <Row>

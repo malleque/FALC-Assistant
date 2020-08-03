@@ -61,10 +61,10 @@ class Home extends Component {
             var text = this.state.texte;
             console.log(text);
             return (
-                <Container>
+                <Container fluid>
                     <Row className="justify-content-md-center">
 
-                        <Col sm>
+                        <Col>
                             <div className="Home-title">
                                 <h1>Accueil</h1>
                             </div>

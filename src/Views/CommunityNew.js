@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Table, Container, Row} from "react-bootstrap";
+import {Col, Table, Container, Row, OverlayTrigger, Popover} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import button from "react-bootstrap/Button";
 import firebase from 'firebase';
@@ -51,20 +51,18 @@ class Community extends Component {
         var arrMessage = this.state.arr;
         return (
             <div>
-                <Container>
+                <Container fluid>
                     <Row>
-                        <Col xs={10}>
+                        <Col>
                             <h1>Documents en attente d'acceptation</h1>
                         </Col>
                         <Col>
-                            <div className="Home-button">
                                 <Link to={"/CommunityO"}>
                                     <button type="button"
-                                            className="btn btn-primary btn-lg" type="submit"
+                                            className="buttonMenu" type="submit"
                                     >Retour
                                     </button>
                                 </Link>
-                            </div>
                         </Col>
                     </Row>
                 </Container>
@@ -74,7 +72,6 @@ class Community extends Component {
                         <th>Personne</th>
                         <th>Document</th>
                         <th>Commentaire</th>
-                        <th>Commentaire</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -83,12 +80,22 @@ class Community extends Component {
                             {console.log(localStorage.getItem("idContact"))}
                             <td>{item.value.sender}</td>
                             <td>{item.value.title}</td>
-                            <td>{item.value.message}</td>
                             <td>
-                                <Link to="/Community"
-                                      onClick={() => (localStorage.setItem("personContact", item.id))}>
-                                    Commentaire
-                                </Link>
+                                <OverlayTrigger
+                                    trigger="click"
+                                    key={'top'}
+                                    placement={'top'}
+                                    overlay={
+                                        <Popover id={`popover-positioned-top`}>
+                                            <Popover.Title as="h3">{`Message:`}</Popover.Title>
+                                            <Popover.Content>
+                                                {item.value.message}
+                                            </Popover.Content>
+                                        </Popover>
+                                    }
+                                >
+                                    <button className="buttonTable">Message</button>
+                                </OverlayTrigger>
                             </td>
                             <td>
                                 <Link to="/CommunityO"

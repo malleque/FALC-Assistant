@@ -166,7 +166,7 @@ class FindPeople extends Component {
                                 className="AB2text2">Mise en page</span></span></span></a>
                             <a > <span className="AB2rotate active3 AB1rotate"><span
                                 className="AB2rotateReset"><span
-                                className="AB2text3">Relecture</span></span></span></a>
+                                className="AB2textActive">Relecture</span></span></span></a>
                         </div>
                     </div>
                 </Col>

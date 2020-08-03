@@ -124,23 +124,17 @@ class File extends Component {
                     <td key={item.title}>
                         {versions.map(item2=>(
                             <td key={item2.title}>
-                                <Container fluid>
-                                    <Row className="justify-content-md-center">
-                                        <Col sm>
-                                            <div className="Home-title">
-                                                <h2>{item.title}</h2>
+
+                                            <div className="split left">
+                                                <h1>{item.title}</h1>
                                             </div>
-                                        </Col>
-                                        <Col sm>
-                                            <div className="Home-button">
+
+                                            <div className="split right">
                                                 <button type="button" onClick={this.handleSubmit}
-                                                        className="btn btn-primary btn-lg" type="submit"
+                                                        className="button" type="submit"
                                                 >Sauvegarder
                                                 </button>
                                             </div>
-                                        </Col>
-                                    </Row>
-                                    <Row>
                                         <div id="breadcrumbNav2">
                                             <div id="arrowBar2">
                                                 <a> <span className="AB2rotate color0"><span
@@ -148,7 +142,7 @@ class File extends Component {
                                                     className="AB2text0">Etapes</span></span></span></a>
                                                 <a> <span className="AB2rotate active1"><span
                                                     className="AB2rotateReset"><span
-                                                    className="AB2text1">Transcription</span></span></span></a>
+                                                    className="AB2textActive">Transcription</span></span></span></a>
                                                 <a href="/Layout"> <span className="AB2rotate color2 AB1rotate"><span
                                                     className="AB2rotateReset"><span
                                                     className="AB2text2">Mise en page</span></span></span></a>
@@ -157,36 +151,28 @@ class File extends Component {
                                                     className="AB2text3">Relecture</span></span></span></a>
                                             </div>
                                         </div>
-                                    </Row>
-                                    <Row className="justify-content-md-center">
-                                        <Col sm>
-                                            <div className="container" ref={this.container}>
-                                                <button type="button" className="button" onClick={this.handleButtonClick}>
-                                                    {FileBefore} ☰
-                                                </button>
 
-                                                {this.state.arrFileChoose.map(item3=>
-                                                        <td key={item3.version}>
-                                                            {this.state.open && (
+                                            <div className="splitM left" ref={this.container}>
+                                                <h3 type="button" className="button" onClick={this.handleButtonClick}>
+                                                    {FileBefore} ☰
+                                                </h3>
                                                 <div className="dropdown">
-                                                    <ul>
+                                                {this.state.arrFileChoose.map(item3=>
+                                                        <ul key={item3.version}>
+                                                            {this.state.open && (
+
                                                         <li onClick={() =>(FileBefore=item3.version, this.setState({version: item3.version}))}>{item3.version}</li>
-                                                    </ul>
-                                                </div>
                                                             )}
-                                                        </td>
+                                                    </ul>
+
                                                 )}
+                                                </div>
                                             </div>
-                                        </Col>
-                                        <Col sm>
-                                            <div className="Home-title">
-                                                <h2>{item.version}</h2>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                            <div className="text-div">
-                                    <Row className="justify-content-md-center" >
-                                        <Col sm>
+                                             <h3 className="splitM right">{item.version}</h3>
+
+
+
+                                       <div className="splitD left">
                                             <CKEditor
                                                 editor={DecoupledEditor}
                                                 onInit={editor => {
@@ -203,8 +189,8 @@ class File extends Component {
                                                 data={item2.data}
                                                 config={DecoupledEditor}
                                             />
-                                        </Col>
-                                        <Col sm key={localStorage.getItem("documentTitle")}>
+                                        </div>
+                                        <div className="splitD right">
                                             <CKEditor
                                                 editor={DecoupledEditor}
                                                 onInit={editor => {
@@ -225,12 +211,11 @@ class File extends Component {
                                                 data={item.data}
                                                 config={DecoupledEditor}
                                             />
-                                        </Col>
+                                        </div>
 
-                                    </Row>
-                            </div>
 
-                                </Container>
+
+
                             </td>
                         ))}
                     </td>))}

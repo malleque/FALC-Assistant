@@ -24,6 +24,21 @@ import GetUser from "../Components/GetUser";
     });*/
 
 var dataTest="";
+var count=1;
+function findVersionNumber(arr){
+    if(arr.length != 0) {
+        console.log(arr);
+        for (var i = 0; i <= arr.length-1; i++) {
+            console.log(arr[i].title)
+            if (arr[i].version.includes("relue")) {
+                if (count <= arr[i].numberV)
+                    count = arr[i].numberV + 1;
+            }
+        }
+
+    }
+
+}
 class CommunityFile extends Component {
     constructor(props) {
         super(props);
@@ -80,9 +95,10 @@ class CommunityFile extends Component {
         firebase.database().ref('files/'+localStorage.getItem("sender")).push(
             {
                 title: localStorage.getItem("documentTitle"),
-                version: "version relue",
+                version: "version relue "+count,
                 date : moment().format("DD-MM-YYYY hh:mm:ss"),
-                data : this.state.data
+                data : this.state.data,
+                numberV : count
             }
         );
         if(!window.location.hash) {
@@ -92,14 +108,17 @@ class CommunityFile extends Component {
         this.setState({
             text: ""
         })
+        count ++;
     }
     handleSubmit2=e =>{
         firebase.database().ref('files/'+localStorage.getItem("sender")).push(
             {
                 title: localStorage.getItem("documentTitle"),
-                version: "version relue",
+                version: "version relue" + count,
                 date : moment().format("DD-MM-YYYY hh:mm:ss"),
-                data : this.state.data
+                data : this.state.data,
+                numberV : count
+
             }
         );
         firebase.database().ref('contact/' + localStorage.getItem("idMessage").toString()).update({
@@ -122,53 +141,43 @@ class CommunityFile extends Component {
                 arrFileC.push({...item})
             }
         });
+        findVersionNumber(this.state.arrFileChoose);
         return (
             <div>
                 {arrFileC.map(item => (
                     <td key={item.title}>
                         {arrFileB.map(item2=>(
                             <td key={item2.title}>
-                                <Container fluid>
-                                    <Row className="justify-content-md-center">
-                                        <Col sm>
-                                            <div className="Home-title">
-                                                <h2>{item.title}</h2>
+
+                                            <div className="split left">
+                                                <h1>{item.title}</h1>
                                             </div>
-                                        </Col>
-                                        <Col sm>
-                                            <div className="Home-button">
+                                            <div className="split right">
                                                 <button type="button" onClick={this.handleSubmit}
-                                                        className="btn btn-primary btn-lg" type="submit"
+                                                        className="buttonMenu" type="submit"
                                                 >Sauvegarder
                                                 </button>
                                             </div>
-                                        </Col>
-                                        <Col sm>
-                                            <div className="Home-button">
+                                        <div className="split rightT">
                                                 <Link to="/CommunityO" onClick={this.handleSubmit2}>
                                                 <button type="button"
-                                                        className="btn btn-primary btn-lg" type="submit"
+                                                        className="buttonMenu" type="submit"
                                                 >Terminer
                                                 </button>
                                                 </Link>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row className="justify-content-md-center">
-                                        <Col sm>
-                                            <div className="Home-title">
+                                        </div>
+
+                                            <div className="splitMCommunity left">
                                                 <h2>{item2.version}</h2>
                                             </div>
-                                        </Col>
-                                        <Col sm>
-                                            <div className="Home-title">
+
+
+                                            <div className="splitMCommunity right">
                                                 <h2>{item.version}</h2>
                                             </div>
-                                        </Col>
-                                    </Row>
-                                    <div className="text-div">
-                                        <Row className="justify-content-md-center" >
-                                            <Col sm>
+
+
+                                    <div className="splitDCommunity left">
                                                 <CKEditor
                                                     editor={DecoupledEditor}
                                                     onInit={editor => {
@@ -185,8 +194,8 @@ class CommunityFile extends Component {
                                                     data={item2.data}
                                                     config={DecoupledEditor}
                                                 />
-                                            </Col>
-                                            <Col sm key={localStorage.getItem("documentTitle")}>
+                                    </div>
+                                    <div className="splitDCommunity right">
                                                 <CKEditor
                                                     editor={DecoupledEditor}
                                                     onInit={editor => {
@@ -207,12 +216,7 @@ class CommunityFile extends Component {
                                                     data={item.data}
                                                     config={DecoupledEditor}
                                                 />
-                                            </Col>
-
-                                        </Row>
-                                    </div>
-
-                                </Container>
+                                            </div>
                             </td>
                         ))}
                     </td>))}

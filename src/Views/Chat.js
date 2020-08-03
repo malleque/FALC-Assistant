@@ -4,16 +4,18 @@ import moment from "moment";
 import '../Css/Chat.css';
 import {Row, Container, Col} from 'react-bootstrap';
 import button from "react-bootstrap/Button";
-var messages=[];
+
+var messages = [];
 var data;
-class Chat extends Component{
-    constructor(props){
+
+class Chat extends Component {
+    constructor(props) {
         super(props);
-    this.state = ({
-        value: "",
-        arrMessages: [],
-    })
-        firebase.database().ref().child('messages').on('value',data => {
+        this.state = ({
+            value: "",
+            arrMessages: [],
+        })
+        firebase.database().ref().child('messages').on('value', data => {
             console.log(data.val());
             messages = data.toJSON();
             const arrMessages = [];
@@ -33,70 +35,77 @@ class Chat extends Component{
         });
         this.handleChange = this.handleChange.bind(this);
     }
+
     handleChange(event) {
         this.setState({value: event.target.value});
-        data= this.state.value;
+        data = this.state.value;
     }
-    handleSubmit(event){
+
+    handleSubmit(event) {
         firebase.database().ref('messages').push(
             {
                 sender: localStorage.getItem("userConnected"),
                 receiver: localStorage.getItem("receiver"),
-                date : moment().format("DD-MM-YYYY hh:mm:ss"),
-                data : data,
+                date: moment().format("DD-MM-YYYY hh:mm:ss"),
+                data: data,
             }
         );
         alert('Votre message a bien été envoyé');
         event.preventDefault();
-        if(!window.location.hash) {
+        if (!window.location.hash) {
             window.location = window.location + '#loaded';
             window.location.reload();
         }
     }
-    render(){
-        var arrMessages = this.state.arrMessages;
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        this.el.scrollIntoView({behavior: 'smooth'});
+    }
+
+    render() {
+        const arrMessages = this.state.arrMessages;
         console.log(arrMessages);
-    return(
-        <div>
+        return (
+            <div>
+                <div className="splite">
+                    <h1>Contact : {localStorage.getItem("receiver")}</h1>
+                </div>
+                <div ref={el => {
+                    this.el = el;
+                }} className="spliteM left">
 
-            <Container>
-                <Row>
-                    <Col>
-                        <h1>{localStorage.getItem("receiver")}</h1>
-                    </Col>
-                </Row>
+                    {arrMessages.map(item => (
+                        <ul key={item.value.date}>
+                            <li>
+                                <h3>{item.value.sender} a écrit à {item.value.date}:</h3>
+                            </li>
+                            <li>
+                                {item.value.data}
 
-                    {arrMessages.map(item=>(
-                        <Row>
-                        <td key = {item.value.date}>
+                            </li>
 
-
-                                <Col>
-                                    <h2>{item.value.sender}</h2>
-                                </Col>
-                                <Col>
-                                    <p>{item.value.data}</p>
-                                </Col>
-
-                        </td>
-                        </Row>
+                        </ul>
                     ))}
+                </div>
+                <div className="spliteD">
+                    <textarea className="textsend" value={this.state.value} onChange={this.handleChange}/>
 
-                <Row>
-            <label>Ecrivez votre message</label>
-                    </Row>
-                <Row>
-            <textarea value={this.state.value} onChange={this.handleChange}/>
-                </Row>
-                <Row>
-            <button type="button" onClick={this.handleSubmit}
-                    className="btn btn-primary btn-lg" type="submit"
-            >Envoyer
-            </button>
-                </Row>
-            </Container>
-        </div>
-    );
+                    <button type="button" onClick={ this.handleSubmit}
+                            className="buttonsend" type="submit"
+                    >Envoyer
+                    </button>
+                </div>
+            </div>
+        );
     };
 }
+
 export default Chat;

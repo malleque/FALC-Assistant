@@ -4,11 +4,11 @@
 p{
     font-family: var(--variable-police);
     text-align: left;
+    margin-left: 10%;
 }
 h1{
     text-align: left;
-    max-height: 10%;
-    margin-bottom: 0px;
+    margin-left: 10%;
 }
 h2{
     text-align: left;
@@ -21,23 +21,55 @@ h2{
     z-index: 1;
     top: 0;
     overflow-x: hidden;
-    margin-top: 10%;
-
+    margin-top: 6%;
+    margin-left: 5%;
+}
+.splitM{
+    margin-top:3%;
+    margin-left: 15%;
+    position: fixed;
+    text-align: left;
+ }
+.splitMCommunity{
+    margin-top:5%;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: fixed;
+    text-align: left;
 }
 .splitD{
-    height: 80%;
+    height: 60%;
     width: 90%;
     position: fixed;
     bottom:0;
     overflow-x: hidden;
-    margin-left: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-style: solid;
+}
+.splitDCommunity{
+    height: 75%;
+    width: 90%;
+    position: fixed;
+    bottom:0;
+    overflow-x: hidden;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-style: solid;
 }
 .left{
     left:0;
+    width: 45%;
+
 }
 .right{
     right:0;
-    border-style: none;
+    width: 45%;
+}
+.rightT{
+    right:0;
+    width: 15%;
 }
 .center{
     position: absolute;
@@ -120,6 +152,27 @@ button{
     background-color : #3949AB;
 
 }
+.buttonTable{
+    border-style: solid;
+    border-radius: 30px;
+    border-color:#FFFFFF;
+    margin-left: 30%;
+    margin-top: 3%;
+    width: auto;
+    float:left;
+    color:#FFFFFF;
+    background-color : #3949AB;
+}
+.buttonMenu{
+    border-style: solid;
+    border-radius: 30px;
+    border-color:#FFFFFF;
+    margin-left: 30%;
+    width: auto;
+    float:left;
+    color:#FFFFFF;
+    background-color : #3949AB;
+}
 
 /* Dropdown Button */
 .dropbtn {
@@ -138,6 +191,7 @@ button{
     position: relative;
     display: inline-block;
     float: left;
+    z-index: 1;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -158,6 +212,7 @@ button{
     text-decoration: none;
     display: block;
     width: auto;
+    z-index: 1;
 }
 
 /* Change color of dropdown links on hover */
@@ -168,10 +223,6 @@ button{
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
-
-body{margin-top: 25px;}
-
 
 .color0arrowTail{
     z-index: 60;
@@ -204,7 +255,7 @@ body{margin-top: 25px;}
     margin-left: 350px;
 }
 #breadcrumbNav2{
-    margin-top: 0px;
+    margin-top : 10%;
     margin-left: 5%;
 }
 #arrowBar2{
@@ -215,7 +266,7 @@ body{margin-top: 25px;}
 }
 .color0{
     z-index: 60;
-    background-color: orange;
+    background-color: black;
     border: 1px solid black;
     margin-left: 0px;
 }
@@ -274,7 +325,13 @@ body{margin-top: 25px;}
     left: -20px;
     color: white;
 }
-
+.AB2textActive{
+    position: relative;
+    top: 50px;
+    left: -20px;
+    color: black;
+    text-decoration: underline;
+}
 .AB1rotate:hover{
     background-color: black;
     color: black;
@@ -282,19 +339,20 @@ body{margin-top: 25px;}
 
 .active1{
     z-index: 50;
-    background-color: grey;
+    background-color: darkgray;
     border: 1px solid black;
     margin-left: 0px;
+    text-decoration: underline;
 }
 .active2{
     z-index: 40;
-    background-color: grey;
+    background-color: darkgray;
     border: 1px solid black;
     margin-left:0px;
 }
 .active3{
     z-index: 30;
-    background-color: DarkGreen;
+    background-color: darkgray;
     border: 1px solid black;
     margin-left: 0px;
 }

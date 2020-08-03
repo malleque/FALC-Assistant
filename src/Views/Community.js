@@ -58,17 +58,24 @@ class Community extends Component {
             <Table responsive>
                 <thead>
                 <tr>
-                    <th>Receiver</th>
-                    <th>message</th>
                     <th>Document</th>
+                    <th>Receiver</th>
                     <th>statut</th>
                     <th>Modifié le...</th>
+                    <th>message</th>
                 </tr>
                 </thead>
                 <tbody>
                 {arrMessage.map(item=>(
                     <tr key={item.value.date}>
-                        <td>{item.value.receiver}</td>
+                        <td>
+                            <Link to="/File" onClick={() =>(localStorage.setItem("documentTitle", item.value.title))}>
+                                {item.value.title}
+                            </Link>
+                        </td>
+                        <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/File')}>{item.value.receiver}</td>
+                        <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/File')}>{item.value.status}</td>
+                        <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/File')}>{item.value.date}</td>
                         <OverlayTrigger
                             trigger="click"
                             key={'top'}
@@ -82,23 +89,8 @@ class Community extends Component {
                                 </Popover>
                             }
                         >
-                            <Button variant="primary">Message</Button>
+                            <button className="buttonTable">Message</button>
                         </OverlayTrigger>
-                        <td>
-                            <Link to="/File" onClick={() =>(localStorage.setItem("documentTitle", item.value.title))}>
-                                {item.value.title}
-                            </Link>
-                            </td>
-                        <td>{item.value.status}</td>
-                        <td>{item.value.date}</td>
-                        <td>
-                            <Link to="/File"
-                                  onClick={() =>(localStorage.setItem("documentTitle", item.id))}>
-                                {item.document}
-                            </Link>
-                        </td>
-                        <td>{item.modification}</td>
-                        <td>{item.version}</td>
                         <td><Link to="/Chat" onClick={()=>(localStorage.setItem("receiver", item.value.receiver))} style={{color:"green"}} >
                             Chat
                         </Link>

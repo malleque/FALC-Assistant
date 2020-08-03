@@ -114,6 +114,10 @@ class CommunityOthers extends Component {
                     value: messages[key]
                 });
             });
+            var sorted_files = arrMessage.sort((a,b) => {
+                return new Date(a.value.date).getTime() -
+                    new Date(b.value.date).getTime()
+            }).reverse();
             this.setState({arr: arrMessage});
             console.log(arrMessage);
         });
@@ -145,20 +149,18 @@ class CommunityOthers extends Component {
         {
             return (
                 <div>
-                    <Container>
+                    <Container fluid>
                         <Row>
                             <Col>
                                 <h1>Documents acceptés</h1>
                             </Col>
                             <Col>
-                                <div className="Home-button">
                                     <Link to={"/CommunityNew"}>
                                         <button type="button"
-                                                className="btn btn-primary btn-lg" type="submit"
+                                                className="buttonMenu" type="submit"
                                         >Nouvelles demandes
                                         </button>
                                     </Link>
-                                </div>
                             </Col>
                         </Row>
                     </Container>
@@ -166,15 +168,22 @@ class CommunityOthers extends Component {
                         <thead>
                         <tr>
                             <th>Personne</th>
-                            <th>message</th>
                             <th>Document</th>
                             <th>Modifié le ...</th>
+                            <th>message</th>
                         </tr>
                         </thead>
                         <tbody>
                         {arrMessage.map(item => (
                             <tr key={item.value.date}>
-                                <td>{item.value.sender}</td>
+                                <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/CommunityFile')}>{item.value.sender}</td>
+                                <td>
+                                    <Link to="/CommunityFile"
+                                          onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentName", item.value.title), localStorage.setItem("idMessage", item.name))}>
+                                        {item.value.title}
+                                    </Link>
+                                </td>
+                                <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/CommunityFile')}>{item.value.date}</td>
                                 <td>
                                     <OverlayTrigger
                                         trigger="click"
@@ -189,16 +198,9 @@ class CommunityOthers extends Component {
                                             </Popover>
                                         }
                                     >
-                                        <Button variant="primary">Message</Button>
+                                        <button className="buttonTable">Message</button>
                                     </OverlayTrigger>
-                              </td>
-                                <td>
-                                    <Link to="/CommunityFile"
-                                          onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentName", item.value.title), localStorage.setItem("idMessage", item.name))}>
-                                        {item.value.title}
-                                    </Link>
                                 </td>
-                                <td>{item.value.date}</td>
                                 <td><Link to="/Chat" onClick={()=>(localStorage.setItem("receiver", item.value.sender))} style={{color:"green"}} >
                                     Chat
                                 </Link>
