@@ -176,14 +176,14 @@ class CommunityOthers extends Component {
                         <tbody>
                         {arrMessage.map(item => (
                             <tr key={item.value.date}>
-                                <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/CommunityFile')}>{item.value.sender}</td>
+                                <td onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("idMessage", item.name), window.location = '/CommunityFile')}>{item.value.sender}</td>
                                 <td>
                                     <Link to="/CommunityFile"
-                                          onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentName", item.value.title), localStorage.setItem("idMessage", item.name))}>
+                                          onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("idMessage", item.name))}>
                                         {item.value.title}
                                     </Link>
                                 </td>
-                                <td onClick={() =>(localStorage.setItem("documentTitle", item.value.title), window.location = '/CommunityFile')}>{item.value.date}</td>
+                                <td onClick={() =>(localStorage.setItem("sender", item.value.username), localStorage.setItem("documentTitle", item.value.title), localStorage.setItem("idMessage", item.name), window.location = '/CommunityFile')}>{item.value.date}</td>
                                 <td>
                                     <OverlayTrigger
                                         trigger="click"

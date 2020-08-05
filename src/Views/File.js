@@ -1,6 +1,5 @@
 import CKEditor from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-
 import React,{Component} from "react";
 import '../Css/Home.css';
 import button from "react-bootstrap/Button";
@@ -8,7 +7,7 @@ import {Col, Container, Dropdown, DropdownButton, Row, Breadcrumb, Button} from 
 import {Link} from "react-router-dom";
 import firebase from 'firebase';
 import moment from "moment";
-var FileBefore="texte initial";
+var FileBefore=localStorage.getItem("documentVersion");
 var dataTest="";
 var files;
 var count=1;
@@ -26,10 +25,62 @@ function findVersionNumber(arr){
     }
 
 }
+function ConvertDivAttributes( editor ) {
+    // Allow <div> elements in the model.
+    editor.model.schema.register( 'div', {
+        allowWhere: '$block',
+        allowContentOf: '$root'
+    } );
+
+    // Allow <div> elements in the model to have all attributes.
+    editor.model.schema.addAttributeCheck( context => {
+        if ( context.endsWith( 'div' ) ) {
+            return true;
+        }
+    } );
+
+    // View-to-model converter converting a view <div> with all its attributes to the model.
+    editor.conversion.for( 'upcast' ).elementToElement( {
+        view: 'div',
+        model: ( viewElement, modelWriter ) => {
+            return modelWriter.createElement( 'div', viewElement.getAttributes() );
+        }
+    } );
+
+    // Model-to-view converter for the <div> element (attributes are converted separately).
+    editor.conversion.for( 'downcast' ).elementToElement( {
+        model: 'div',
+        view: 'div'
+    } );
+
+    // Model-to-view converter for <div> attributes.
+    // Note that a lower-level, event-based API is used here.
+    editor.conversion.for( 'downcast' ).add( dispatcher => {
+        dispatcher.on( 'attribute', ( evt, data, conversionApi ) => {
+            // Convert <div> attributes only.
+            if ( data.item.name != 'div' ) {
+                return;
+            }
+
+            const viewWriter = conversionApi.writer;
+            const viewDiv = conversionApi.mapper.toViewElement( data.item );
+
+            // In the model-to-view conversion we convert changes.
+            // An attribute can be added or removed or changed.
+            // The below code handles all 3 cases.
+            if ( data.attributeNewValue ) {
+                viewWriter.setAttribute( data.attributeKey, data.attributeNewValue, viewDiv );
+            } else {
+                viewWriter.removeAttribute( data.attributeKey, viewDiv );
+            }
+        } );
+    } );
+}
 class File extends Component {
     constructor(props) {
         super(props);
-        var container = React.createRef();
+        //For the dropdown button to close it when we click outside
+        this.container = React.createRef();
         this.state = {
             arrFile: [],
             arrFileChoose: [],
@@ -37,7 +88,7 @@ class File extends Component {
             data: "",
             open: false,
             numberV: count,
-            version: "texte initial"
+            version: localStorage.getItem("documentVersion")
         }
         FileBefore = this.state.version;
         console.log(localStorage.getItem("documentTitle"));
@@ -66,6 +117,19 @@ class File extends Component {
                 });
         });
     }
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+    handleClickOutside = event => {
+        if (this.container.current && !this.container.current.contains(event.target)) {
+            this.setState({
+                open: false,
+            });
+        }
+    };
     handleButtonClick = () => {
         this.setState(state => {
             return {
@@ -77,6 +141,9 @@ class File extends Component {
         this.setState({
             data: dataTest
         })
+    }
+    handleFindErrors=e =>{
+        dataTest = dataTest.replace('test', 'bite');
     }
     handleSubmit=e =>{
         firebase.database().ref('files/'+localStorage.getItem("username")).push(
@@ -95,6 +162,7 @@ class File extends Component {
         this.setState({
             text: ""
         })
+        FileBefore= "version de travail "+count;
         count ++;
     }
 
@@ -105,19 +173,36 @@ class File extends Component {
         }
         var arrFileC=[];
         this.state.arrFileChoose.forEach(item=>{
-            if(!arrFileC.some(i => i.title === item.title)){
+            if(item.version === "texte initial"){
                 arrFileC.push({...item})
             }
         });
         var versions=[];
+        console.log(FileBefore)
         console.log(arrFileC);
         this.state.arrFileChoose.forEach(item=>{
             if(item.version === FileBefore.toString()){
                 versions.push({...item})
             }
         });
+        console.log(localStorage.getItem("documentVersion"));
         console.log(versions);
+        console.log(arrFileC);
+        console.log(FileBefore);
         findVersionNumber(this.state.arrFileChoose);
+        DecoupledEditor
+            .create( document.querySelector( '#editor' ), {
+                extraPlugins: [ ConvertDivAttributes ],
+            })
+            .then( editor => {
+                console.log( 'Editor was initialized', editor );
+
+                // Append the toolbar to the <body> element.
+                document.body.appendChild( editor.ui.view.toolbar.element );
+            } )
+            .catch( err => {
+                console.error( err.stack );
+            } );
         return (
             <div>
                 {arrFileC.map(item => (
@@ -139,7 +224,7 @@ class File extends Component {
                                             <div id="arrowBar2">
                                                 <a> <span className="AB2rotate color0"><span
                                                     className="AB2rotateReset"><span
-                                                    className="AB2text0">Etapes</span></span></span></a>
+                                                    className="AB2text0"><h1>Etapes:</h1></span></span></span></a>
                                                 <a> <span className="AB2rotate active1"><span
                                                     className="AB2rotateReset"><span
                                                     className="AB2textActive">Transcription</span></span></span></a>
@@ -152,8 +237,8 @@ class File extends Component {
                                             </div>
                                         </div>
 
-                                            <div className="splitM left" ref={this.container}>
-                                                <h3 type="button" className="button" onClick={this.handleButtonClick}>
+                                            <div className="splitM right" ref={this.container}>
+                                                <h3 type="button" className="buttonDropdown" onClick={this.handleButtonClick}>
                                                     {FileBefore} ☰
                                                 </h3>
                                                 <div className="dropdown">
@@ -161,14 +246,14 @@ class File extends Component {
                                                         <ul key={item3.version}>
                                                             {this.state.open && (
 
-                                                        <li onClick={() =>(FileBefore=item3.version, this.setState({version: item3.version}))}>{item3.version}</li>
+                                                        <li className="liDropdown" onClick={() =>(FileBefore=item3.version, this.setState({version: item3.version}))}>{item3.version}</li>
                                                             )}
                                                     </ul>
 
                                                 )}
                                                 </div>
                                             </div>
-                                             <h3 className="splitM right">{item.version}</h3>
+                                             <h3 className="splitM left">{item.version}</h3>
 
 
 
@@ -186,7 +271,7 @@ class File extends Component {
                                                 }}
                                                 onChange={(event, editor) => console.log({event, editor})}
                                                 editor={DecoupledEditor}
-                                                data={item2.data}
+                                                data={item.data}
                                                 config={DecoupledEditor}
                                             />
                                         </div>
@@ -204,12 +289,15 @@ class File extends Component {
                                                 }}
                                                 onChange={(event, editor) => {
                                                     dataTest = editor.getData();
-                                                    this.handleData()
+                                                    this.handleData();
+                                                    this.handleFindErrors();
                                                     console.log({event, editor, dataTest});
                                                 }}
                                                 editor={DecoupledEditor}
-                                                data={item.data}
+                                                dataTest={item2.data}
+                                                data={item2.data}
                                                 config={DecoupledEditor}
+
                                             />
                                         </div>
 
@@ -224,6 +312,6 @@ class File extends Component {
 
         );
     }
-}
 
+}
 export default File;

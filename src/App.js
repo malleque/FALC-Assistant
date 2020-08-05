@@ -18,6 +18,7 @@ import CommunityFile from "./Views/CommunityFile";
 import CommunityOthers from './Views/CommunityOthers';
 import {withAuthentication} from './Components/Session';
 import PasswordForget from './Components/PasswordForget';
+import NewWord from "./Views/NewWord";
 import Chat from './Views/Chat';
 import NewFile from './Views/NewFile';
 import firebase from 'firebase';
@@ -92,6 +93,7 @@ class App extends Component {
                                         <Route path="/CommunityFile" component ={CommunityFile}/>
                                         <Route path="/NewFile" component ={NewFile}/>
                                         <Route path="/Chat" component ={Chat}/>
+                                        <Route path="/NewWord" component ={NewWord}/>
 
                                     </Switch>
                                 </div>

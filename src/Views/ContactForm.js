@@ -55,45 +55,41 @@ var idPush;
                 window.location.reload();
             }
             var arrContact= this.state.arrContact;
-            return (
-                <Container>
-                    {arrContact.map(item => (
-                        <td key={item.title}>
-                    <Row>
-                            <h1>Formulaire de contact</h1>
-                    </Row>
-                    <div className="contactform-div">
-                        <Row>
-                            <Col className="contactform-title">
-                                <h2>{item.lastname} {item.name}</h2>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="contactform-input">
-                                <h3>{item.role}</h3>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="contactform-input">
-                                <h3>{localStorage.getItem("documentTitle")}</h3>
-                            </Col>
-                        </Row>
+            return(
+                <div>
 
-                        <Form className="contactform-input">
+                        {arrContact.map(item => (
+                            <td key={item.title}>
+                                <div className="splitC ">
+                                <h1>Contact : {item.lastname} {item.name}</h1>
+                                </div>
+                                <div className="splitTarif">
+                                    <h3>Tarif : {item.tarif}.- CHF</h3>
+                                </div>
+                                <div className="splitMC">
+                                    <h3> Role : {item.role}</h3>
+                                </div>
+                                <div className="splitMDC">
+                                    <h3>Document : {localStorage.getItem("documentTitle")}</h3>
+                                </div>
+                                <div className="splitDC">
+                                <Form className="contactform-input">
                             <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Laisser un commentaire:</Form.Label>
+                                <Form.Label>Votre message pour le relecteur:</Form.Label>
                                 <Form.Control onChange={this.handleText} as="textarea" rows="10"/>
                             </Form.Group>
                         </Form>
-                    </div>
+            </div>
+            <div className="splitButton">
                     <Link to={"/Community"}>
-                        <Button onClick={this.handleSubmit} variant="primary" size="lg"
+                        <button onClick={this.handleSubmit} className="button"
                         >Contacter
-                        </Button>
+                        </button>
                     </Link>
+            </div>
                         </td>
-                            ))}
-                </Container>
+                        ))}
+                </div>
                     );
         };
     }

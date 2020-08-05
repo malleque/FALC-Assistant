@@ -8,7 +8,7 @@ p{
 }
 h1{
     text-align: left;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 h2{
     text-align: left;
@@ -29,6 +29,7 @@ h2{
     margin-left: 15%;
     position: fixed;
     text-align: left;
+    z-index: 1;
  }
 .splitMCommunity{
     margin-top:5%;
@@ -47,6 +48,7 @@ h2{
     margin-left: 5%;
     margin-right: 5%;
     border-style: solid;
+    z-index: 0;
 }
 .splitDCommunity{
     height: 75%;
@@ -58,6 +60,8 @@ h2{
     margin-right: 5%;
     border-style: solid;
 }
+
+
 .left{
     left:0;
     width: 45%;
@@ -78,7 +82,54 @@ h2{
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
+/*css du formulaire de contact*/
+.splitC {
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    margin-top: 6%;
+    margin-left: 15%;
+}
+.splitMC{
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    margin-top : 10%;
+    margin-left: 20%;
+    text-align: left;
+}
+.splitMDC{
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    margin-top : 13%;
+    margin-left: 20%;
+    text-align: left;
+}
+.splitTarif{
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    margin-top : 7%;
+    margin-left: 20%;
+    text-align: left;
+}
+.splitDC{
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    margin-left: 0%;
+    margin-top : 16%;
+}
+.splitButton{
+    position: fixed;
+    margin-top: 35%;
+    margin-left: 40%;
+    width: 30%;
+}
 .Home-logo {
     margin-top : 2px;
     height: 4vmin;
@@ -129,7 +180,9 @@ h2{
     margin-left: 15%;
 }
 .contactform-div{
-    border : thick #0000FF;
+    height: 10%;
+    width: 100%;
+    text-align: center;
 }
 .file-text{
     margin-top: 5%;
@@ -163,6 +216,17 @@ button{
     color:#FFFFFF;
     background-color : #3949AB;
 }
+.buttonCreate{
+    border-style: solid;
+    border-radius: 30px;
+    border-color:#FFFFFF;
+    margin-left: 20%;
+    margin-top: 3%;
+    width: 20%;
+    float:left;
+    color:#FFFFFF;
+    background-color : #3949AB;
+}
 .buttonMenu{
     border-style: solid;
     border-radius: 30px;
@@ -174,7 +238,7 @@ button{
     background-color : #3949AB;
 }
 
-/* Dropdown Button */
+/*!* Dropdown Button *!
 .dropbtn {
     min-width: 100%;
     margin-top: 30%;
@@ -186,26 +250,26 @@ button{
     background-color : #3949AB;
 }
 
-/* The container <div> - needed to position the dropdown content */
+!* The container <div> - needed to position the dropdown content *!
 .dropdown {
     position: relative;
     display: inline-block;
     float: left;
-    z-index: 1;
+    z-index: -1;
 }
 
-/* Dropdown Content (Hidden by Default) */
+!* Dropdown Content (Hidden by Default) *!
 .dropdown-content {
     display: none;
-    position: absolute;
+    position: relative;
     min-width: max-content;
-    background-color: #f1f1f1;
+    background-color: orange;
     width: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: -1;
 }
 
-/* Links inside the dropdown */
+!* Links inside the dropdown *!
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -213,16 +277,17 @@ button{
     display: block;
     width: auto;
     z-index: 1;
+    background-color: orange;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+!* Change color of dropdown links on hover *!
+.dropdown-content a:hover {background-color: orange;}
 
-/* Show the dropdown menu on hover */
+!* Show the dropdown menu on hover *!
 .dropdown:hover .dropdown-content {display: block;}
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+!* Change the background color of the dropdown button when the dropdown content is shown *!
+.dropdown:hover .dropbtn {background-color: orange;}*/
 
 .color0arrowTail{
     z-index: 60;
@@ -357,6 +422,14 @@ button{
     margin-left: 0px;
 }
 
+ /*dropdown button for the File*/
+.buttonDropdown{
+    padding: 0;
+    width: auto;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+}
 .dropdown {
     position: absolute;
     top: 100%;
@@ -366,17 +439,17 @@ button{
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
 }
-
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-li {
+.liDropdown {
     padding: 8px 12px;
+    background-color: white;
 }
 
-li:hover {
-    background-color: rgba(0, 0, 0, 0.14);
+.liDropdown:hover {
+    background-color: gray;
     cursor: pointer;
 }

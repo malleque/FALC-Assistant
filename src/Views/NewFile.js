@@ -58,7 +58,7 @@ class NewFile extends Component {
                     </Form>
                 <br/>
                 <Link to={"/Files"}>
-                    <button onClick={this.handleSubmit}
+                    <button className="buttonCreate" onClick={this.handleSubmit}
                     >Créer
                     </button>
                 </Link>

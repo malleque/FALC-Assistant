@@ -106,12 +106,15 @@ let medical = listPeople.filter(function (people){
     return people.role === "Expert médical"
 })
 var contacts;
-
+var filter="filter";
 class FindPeople extends Component {
     constructor(props) {
         super(props);
+        this.container = React.createRef();
         this.state = {
             arrContact: [],
+            open: false,
+            filter : {filter},
         }
         firebase.database().ref().child('users').on('value', data =>{
             console.log(data.val());
@@ -125,6 +128,26 @@ class FindPeople extends Component {
             this.setState({arrContact: arrContact})
         });
     }
+    handleButtonClick = () => {
+        this.setState(state => {
+            return {
+                open: !state.open,
+            };
+        });
+    };
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+    handleClickOutside = event => {
+        if (this.container.current && !this.container.current.contains(event.target)) {
+            this.setState({
+                open: false,
+            });
+        }
+    };
 
     render(){
         var arr=this.state.arrContact;
@@ -138,17 +161,21 @@ class FindPeople extends Component {
                     </div>
                 </Col>
                 <Col sm>
-                    <DropdownButton id="dropdown-basic-button" title="Filtrer" className="Home-title">
-                        <Dropdown.Item href="#/expert"  onClick={() => {
-                            choice=[...experts];
-                            window.location.reload();
-                        }}>Expert Falc</Dropdown.Item>
-                        <Dropdown.Item href="#/relecture" onClick={choice=listPeople.filter(function (people){
-                        return people.role === "Expert juridique"})}>Groupe de relecture</Dropdown.Item>
-                        <Dropdown.Item href="#/juridique" onClick={choice=[...juridique]}>Expert juridique</Dropdown.Item>
-                        <Dropdown.Item href="#/medical" onClick={choice=[...medical]}>Expert médical</Dropdown.Item>
-                        <Dropdown.Item href="#/medical" onClick={choice=[...listPeople]}>Tous les rôles</Dropdown.Item>
-                    </DropdownButton>
+                    <div ref={this.container}>
+                        <h3 type="button" className="buttonDropdown" onClick={this.handleButtonClick}>
+                            {filter} ☰
+                        </h3>
+                        {this.state.open && (
+                        <div className="dropdown">
+                            <ul>
+                                        <li className="liDropdown" onClick={() =>(filter="Expert FALC", this.setState({filter: filter}))}>Expert FALC</li>
+                                        <li className="liDropdown" onClick={() =>(filter="Groupe de relecture")}>Groupe de relecture</li>
+                                        <li className="liDropdown" onClick={() =>(filter="Expert juridique")}>Expert juridique</li>
+                                        <li className="liDropdown" onClick={() =>(filter="Expert médical")}>Expert médical</li>
+                                </ul>
+                        </div>
+                        )}
+                    </div>
                 </Col>
             </Row>
             <Row>
@@ -157,11 +184,11 @@ class FindPeople extends Component {
                         <div id="arrowBar2">
                             <a> <span className="AB2rotate color0"><span
                                 className="AB2rotateReset"><span
-                                className="AB2text0">Etapes</span></span></span></a>
+                                className="AB2text0"><h1>Etapes:</h1></span></span></span></a>
                             <a href="/File"> <span className="AB2rotate color1 AB1rotate"><span
                                 className="AB2rotateReset"><span
                                 className="AB2text1">Transcription</span></span></span></a>
-                            <a href="/Layout"> <span className="AB2rotate color2"><span
+                            <a href="/Layout"> <span className="AB2rotate color2 AB1rotate"><span
                                 className="AB2rotateReset"><span
                                 className="AB2text2">Mise en page</span></span></span></a>
                             <a > <span className="AB2rotate active3 AB1rotate"><span

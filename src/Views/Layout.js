@@ -163,7 +163,7 @@ class Layout extends Component {
                             <div id="arrowBar2">
                                         <a> <span className="AB2rotate color0"><span
                                             className="AB2rotateReset"><span
-                                            className="AB2text0">Etapes</span></span></span></a>
+                                            className="AB2text0"><h1>Etapes:</h1></span></span></span></a>
                                         <a href="/File"> <span className="AB2rotate color1 AB1rotate"><span
                                             className="AB2rotateReset"><span
                                             className="AB2text1">Transcription</span></span></span></a>

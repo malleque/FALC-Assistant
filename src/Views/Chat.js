@@ -7,7 +7,6 @@ import button from "react-bootstrap/Button";
 
 var messages = [];
 var data;
-
 class Chat extends Component {
     constructor(props) {
         super(props);
@@ -34,14 +33,16 @@ class Chat extends Component {
             });
         });
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
-        data = this.state.value;
+
     }
 
     handleSubmit(event) {
+
         firebase.database().ref('messages').push(
             {
                 sender: localStorage.getItem("userConnected"),
@@ -56,31 +57,20 @@ class Chat extends Component {
             window.location = window.location + '#loaded';
             window.location.reload();
         }
-    }
-
-    componentDidMount() {
-        this.scrollToBottom();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBottom();
-    }
-
-    scrollToBottom() {
-        this.el.scrollIntoView({behavior: 'smooth'});
+        this.setState({value : ""});
     }
 
     render() {
         const arrMessages = this.state.arrMessages;
         console.log(arrMessages);
+        data=this.state.value;
+        console.log(data);
         return (
             <div>
                 <div className="splite">
                     <h1>Contact : {localStorage.getItem("receiver")}</h1>
                 </div>
-                <div ref={el => {
-                    this.el = el;
-                }} className="spliteM left">
+                <div className="spliteM left">
 
                     {arrMessages.map(item => (
                         <ul key={item.value.date}>
@@ -96,9 +86,9 @@ class Chat extends Component {
                     ))}
                 </div>
                 <div className="spliteD">
-                    <textarea className="textsend" value={this.state.value} onChange={this.handleChange}/>
+                    <textarea className="textsend" data={this.state.value} onChange={this.handleChange}/>
 
-                    <button type="button" onClick={ this.handleSubmit}
+                    <button type="button" onClick={(this.handleSubmit)}
                             className="buttonsend" type="submit"
                     >Envoyer
                     </button>

@@ -18,7 +18,7 @@ class Navigbar extends React.Component{
     }
     render(){
         var arrUser= this.state.arr;
-        if(localStorage.getItem("role")==="Utilisateur"){
+
         return(
             <div>
         <Navbar className="navigbar-custom">
@@ -27,13 +27,13 @@ class Navigbar extends React.Component{
             </Navbar.Brand>
             <Nav>
                 <li>
-                <Nav.Link href="/Files"><text className="navigbar-text">Documents</text></Nav.Link>
+                <Nav.Link href="/Files"><text className="navigbar-text">Mes documents</text></Nav.Link>
                 </li>
                 <li>
-                <Nav.Link href="/Community"><text className="navigbar-text">Communauté</text></Nav.Link>
+                <Nav.Link href="/CommunityO"><text className="navigbar-text">Mes relectures</text></Nav.Link>
                 </li>
                 <li>
-                    <Nav.Link href="/Settings"><text className="navigbar-text">Paramètres</text></Nav.Link>
+                    <Nav.Link href="/Settings"><text className="navigbar-text">Règles FALC</text></Nav.Link>
                 </li>
                 <li>
                     <SignOutButton/>
@@ -46,36 +46,6 @@ class Navigbar extends React.Component{
         </Navbar>
             </div>
         );
-        }
-        else{
-            return(
-            <div>
-                <Navbar className="navigbar-custom">
-                    <Navbar.Brand href="/Home">
-                        <img src={Logo} className="navigbar-logo"/> <text className="navigbar-text">FALC-Assistant</text>
-                    </Navbar.Brand>
-                    <Nav>
-                        <li>
-                            <Nav.Link href="/Files"><text className="navigbar-text">Documents</text></Nav.Link>
-                        </li>
-                        <li>
-                            <Nav.Link href="/CommunityO"><text className="navigbar-text">Communauté</text></Nav.Link>
-                        </li>
-                        <li>
-                            <Nav.Link href="/Settings"><text className="navigbar-text">Paramètres</text></Nav.Link>
-                        </li>
-                        <li>
-                            <SignOutButton/>
-                        </li>
-                    </Nav>
-                    {/*<Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-light">Search</Button>
-                     </Form>*/}
-                </Navbar>
-            </div>
-            );
-        }
     }
 }
 export default Navigbar;
